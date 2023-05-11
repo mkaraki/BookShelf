@@ -13,7 +13,7 @@
     Sites:
     <ul>
         <?php foreach (get_sites() as $site) : ?>
-            <li><a href="site.php?id=<?= $site['siteId'] ?>"><?= htmlentities($site['siteName']) ?></a></li>
+            <li><a href="list/site.php?id=<?= $site['siteId'] ?>"><?= htmlentities($site['siteName']) ?></a></li>
         <?php endforeach; ?>
     </ul>
 </section>

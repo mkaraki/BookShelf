@@ -21,7 +21,7 @@ $case = get_case($shelf['parentCase']);
 
 <section>
     <?php if ($login_is) : ?>
-        <a href="add_book_form.php?id=<?= $_GET['id'] ?>">Add book</a>
+        <a href="../bookmgr/add_book_form.php?id=<?= $_GET['id'] ?>">Add book</a>
     <?php endif; ?>
 </section>
 
