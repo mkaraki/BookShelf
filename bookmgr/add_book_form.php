@@ -1,20 +1,22 @@
-<?php require __DIR__ . '/internal/lib_util.php'; ?>
-<?php //require __DIR__ . '/internal/auth.php'; 
+<?php require __DIR__ . '/../internal/lib_util.php'; ?>
+<?php //require __DIR__ . '/../internal/auth.php'; 
 ?>
-<?php require __DIR__ . '/partial/page-head.php'; ?>
+<?php
+$page_title = 'Add book - Book Shelf';
+?>
+<?php require __DIR__ . '/../partial/page-head.php'; ?>
 
 <style>
     .err {
         color: red;
     }
+
+    input[readonly] {
+        background-color: #0f0;
+    }
 </style>
 
-<section>
-    Hello <?= $login_name ?>.
-    <?php if (!$login_is) : ?>
-        <a href="dash.php">Login</a>
-    <?php endif; ?>
-</section>
+<h1>Add books</h1>
 
 <section>
     <form action="" method="get" onsubmit="return false">
@@ -25,6 +27,8 @@
 </section>
 
 <form action="add_book.php" method="POST">
+    <input type="hidden" name="shelfId" value="<?= htmlentities($_GET['id']) ?>">
+
     <section>
         <h3>Title</h3>
         <label for="name">Book title</label>
@@ -42,7 +46,7 @@
     <section>
         <h3>Authors</h3>
         <div id="authorHolder">
-            <input type="hidden" name="authorNum" id="authorNum">
+            <input type="hidden" name="authorNum" id="authorNum" value="0">
         </div>
         <br />
         <button type="button" onclick="addAuthorNum()">New</button>
@@ -53,6 +57,7 @@
         <h3>Publisher</h3>
         <label for="publisher">Publisher</label>
         <input type="text" name="publisher" id="publisher">
+        <input type="hidden" name="internalPublisherId" id="internalPublisherId">
         <button type="button" onclick="clearPublisher()">×</button>
         <button type="button" onclick="searchPublisher()">🔎</button>
         <br />
@@ -73,4 +78,4 @@
 
 
 <script src="add_book.js"></script>
-<?php require __DIR__ . '/partial/page-end.php'; ?>
+<?php require __DIR__ . '/../partial/page-end.php'; ?>

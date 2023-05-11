@@ -61,6 +61,16 @@ function get_authors($bookId)
     return $authors;
 }
 
+function search_authors($name)
+{
+    return DB::query('SELECT * FROM authorInfo WHERE authorName LIKE %ss', $name);
+}
+
+function search_publishers($name)
+{
+    return DB::query('SELECT * FROM publisherInfo WHERE publisherName LIKE %ss', $name);
+}
+
 function calc_bcd_cd($code)
 {
     $code = str_split(strval($code));

@@ -34,19 +34,19 @@ VALUES (1, 'System Internal: Temporary Case', 1);
 INSERT INTO shelfInfo
 VALUES (1, 1, 1);
 CREATE TABLE authorInfo(
-    authorId bigint unsigned primary key AUTOINCREMENT,
+    authorId bigint unsigned primary key AUTO_INCREMENT,
     authorName VARCHAR(256) not null,
     authorRead VARCHAR(256),
-    authorDisambiguation VARCHAR(512),
+    authorDisambiguation VARCHAR(512)
 );
 CREATE TABLE publisherInfo(
-    publisherId bigint unsigned primary key AUTOINCREMENT,
+    publisherId bigint unsigned primary key AUTO_INCREMENT,
     publisherName VARCHAR(512) not null,
     publisherRead VARCHAR(512),
     publisherDisambiguation VARCHAR(512)
 );
 CREATE TABLE bookAuthorLinker(
-    linkId bigint unsigned primary key AUTOINCREMENT,
+    linkId bigint unsigned primary key AUTO_INCREMENT,
     uniqueBookId bigint unsigned not null,
     authorId bigint unsigned not null
 );
@@ -57,6 +57,5 @@ CREATE TABLE bookCollection(
     bookRead VARCHAR(512),
     publisherId bigint unsigned,
     isbn bigint unsigned,
-    editionNumber tinyint unsigned,
     bookDisambiguation VARCHAR(512)
 );

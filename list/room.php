@@ -1,6 +1,6 @@
-<?php require __DIR__ . '/internal/lib_util.php'; ?>
-<?php require __DIR__ . '/internal/login_info.php'; ?>
-<?php require __DIR__ . '/partial/page-head.php'; ?>
+<?php require __DIR__ . '/../internal/lib_util.php'; ?>
+<?php require __DIR__ . '/../internal/login_info.php'; ?>
+<?php require __DIR__ . '/../partial/page-head.php'; ?>
 
 <?php
 if (!isset($_GET['id']) || !is_numeric($_GET['id']))
@@ -35,4 +35,4 @@ if (!$room)
     </ul>
 </section>
 
-<?php require __DIR__ . '/partial/page-end.php'; ?>
+<?php require __DIR__ . '/../partial/page-end.php'; ?>

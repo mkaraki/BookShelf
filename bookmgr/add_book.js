@@ -1,7 +1,7 @@
 function addAuthorNum(preDefinedAuthor = '') {
     const authorNum = parseInt(document.getElementById('authorNum').value);
     const newAuthorNum = authorNum + 1;
-    document.getElementById('authorNum').innerText = newAuthorNum;
+    document.getElementById('authorNum').value = newAuthorNum;
     const authorHolder = document.getElementById('authorHolder');
 
     const newAuthorHolder = document.createElement('div');
@@ -35,6 +35,44 @@ function addAuthorNum(preDefinedAuthor = '') {
     newAuthorHolder.appendChild(newAuthorSearch);
 
     authorHolder.appendChild(newAuthorHolder);
+}
+
+function clearAuthor(num) {
+    document.getElementById(`author${num}`).value = '';
+    document.getElementById(`internalAuthorId${num}`).value = '';
+    document.getElementById(`author${num}`).removeAttribute('readonly');
+}
+
+function searchAuthor(num) {
+    const name = document.getElementById(`author${num}`).value;
+    const ue_name = encodeURI(name);
+    const neww = window.open(`search_author.php?name=${ue_name}&num=${num}`, '_blank', 'width=800,height=600');
+    neww.focus();
+}
+
+function setAuthorId(num, id) {
+    document.getElementById(`internalAuthorId${num}`).value = id;
+    document.getElementById(`author${num}`).setAttribute('readonly', '1');
+    return true;
+}
+
+function clearPublisher() {
+    document.getElementById('publisher').value = '';
+    document.getElementById('internalPublisherId').value = '';
+    document.getElementById('publisher').removeAttribute('readonly');
+}
+
+function searchPublisher() {
+    const name = document.getElementById('publisher').value;
+    const ue_name = encodeURI(name);
+    const neww = window.open(`search_publisher.php?name=${ue_name}`, '_blank', 'width=800,height=600');
+    neww.focus();
+}
+
+function setPublisherId(id) {
+    document.getElementById('internalPublisherId').value = id;
+    document.getElementById('publisher').setAttribute('readonly', '1');
+    return true;
 }
 
 function putSearchedData(name, nameRead, authors, publisher, isbn = '') {

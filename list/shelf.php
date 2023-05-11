@@ -1,6 +1,6 @@
-<?php require __DIR__ . '/internal/lib_util.php'; ?>
-<?php require __DIR__ . '/internal/login_info.php'; ?>
-<?php require __DIR__ . '/partial/page-head.php'; ?>
+<?php require __DIR__ . '/../internal/lib_util.php'; ?>
+<?php require __DIR__ . '/../internal/login_info.php'; ?>
+<?php require __DIR__ . '/../partial/page-head.php'; ?>
 
 <?php
 if (!isset($_GET['id']) || !is_numeric($_GET['id']))
@@ -41,13 +41,13 @@ $case = get_case($shelf['parentCase']);
             <?php foreach (get_books($_GET['id']) as $v) : ?>
                 <?php
                 $publisher = null;
-                if ($edition['publisherId'])
+                if ($v['publisherId'])
                     $publisher = get_publisher($v['publisherId']);
                 ?>
                 <tr id="book-<?= $v['uniqueBookId'] ?>">
                     <td>00<?= $v['uniqueBookId'] ?><?= calc_bcd_cd($v['uniqueBookId']) ?></td>
                     <td>
-                        <?= htmlentities($v['title']) ?>
+                        <?= htmlentities($v['bookName']) ?>
                         <?php if ($v['bookDisambiguation']) : ?>
                             (<?= htmlentities($v['bookDisambiguation']) ?>)
                         <?php endif; ?>
@@ -58,7 +58,7 @@ $case = get_case($shelf['parentCase']);
                         <?php endif; ?>
                     </td>
                     <td>
-                        <?php foreach (get_authors($v['bookId']) as $author) : ?>
+                        <?php foreach (get_authors($v['uniqueBookId']) as $author) : ?>
                             <?= htmlentities($author['authorName']) ?>;
                         <?php endforeach; ?>
                     </td>
@@ -82,4 +82,4 @@ $case = get_case($shelf['parentCase']);
     </table>
 </section>
 
-<?php require __DIR__ . '/partial/page-end.php'; ?>
+<?php require __DIR__ . '/../partial/page-end.php'; ?>
