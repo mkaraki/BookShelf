@@ -1,44 +1,38 @@
 CREATE TABLE userInfo(
-    userId bigint unsigned primary key AUTOINCREMENT,
+    userId bigint unsigned primary key AUTO_INCREMENT,
     userMail VARCHAR(254) not null,
     userName VARCHAR(256) not null,
     userPasswordHash VARCHAR(60),
-    userType tinyint unsigned DEFAULT(0)
+    userType tinyint unsigned
 );
 CREATE TABLE siteInfo(
-    siteId bigint unsigned primary key AUTOINCREMENT,
+    siteId bigint unsigned primary key AUTO_INCREMENT,
     siteName VARCHAR(256) not null
 );
 CREATE TABLE roomInfo(
-    roomId bigint unsigned primary key AUTOINCREMENT,
+    roomId bigint unsigned primary key AUTO_INCREMENT,
     roomName VARCHAR(256) not null,
     parentSite bigint unsigned not null,
     roomFloor TINYINT
 );
 CREATE TABLE caseInfo(
-    caseId bigint unsigned primary key AUTOINCREMENT,
+    caseId bigint unsigned primary key AUTO_INCREMENT,
     caseName VARCHAR(256) not null,
     parentRoom bigint unsigned not null
 );
 CREATE TABLE shelfInfo(
-    shelfId bigint unsigned primary key AUTOINCREMENT,
+    shelfId bigint unsigned primary key AUTO_INCREMENT,
     shelfNumber tinyint unsigned not null,
     parentCase bigint unsigned not null
 );
 INSERT INTO siteInfo
-VALUES (0, 'System Internal Site');
+VALUES (1, 'System Internal Site');
 INSERT INTO roomInfo
-VALUES (0, 'System Internal Room', 0, 1);
+VALUES (1, 'System Internal Room', 1, 1);
 INSERT INTO caseInfo
-VALUES (0, 'System Internal: Temporary Case', 0);
+VALUES (1, 'System Internal: Temporary Case', 1);
 INSERT INTO shelfInfo
-VALUES (0, 0, 0);
-CREATE TABLE editionInfo(
-    editionId bigint unsigned primary key AUTOINCREMENT,
-    bookName VARCHAR(512) not null,
-    publisherInfo bigint unsigned,
-    bookDisambiguation VARCHAR(512)
-);
+VALUES (1, 1, 1);
 CREATE TABLE authorInfo(
     authorId bigint unsigned primary key AUTOINCREMENT,
     authorName VARCHAR(256) not null,
@@ -51,13 +45,18 @@ CREATE TABLE publisherInfo(
     publisherRead VARCHAR(512),
     publisherDisambiguation VARCHAR(512)
 );
-CREATE TABLE editionAuthorLinker(
+CREATE TABLE bookAuthorLinker(
     linkId bigint unsigned primary key AUTOINCREMENT,
-    editionId bigint unsigned not null,
+    uniqueBookId bigint unsigned not null,
     authorId bigint unsigned not null
 );
 CREATE TABLE bookCollection(
-    uniqueBookId bigint unsigned primary key AUTOINCREMENT,
-    editionId bigint unsigned primary key AUTOINCREMENT,
-    belongShelf bigint unsigned not null
+    uniqueBookId bigint unsigned primary key AUTO_INCREMENT,
+    belongShelf bigint unsigned not null,
+    bookName VARCHAR(512) not null,
+    bookRead VARCHAR(512),
+    publisherId bigint unsigned,
+    isbn bigint unsigned,
+    editionNumber tinyint unsigned,
+    bookDisambiguation VARCHAR(512)
 );
