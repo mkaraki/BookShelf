@@ -40,17 +40,16 @@ $case = get_case($shelf['parentCase']);
         <tbody>
             <?php foreach (get_books($_GET['id']) as $v) : ?>
                 <?php
-                $edition = get_edition($v['editionId']);
                 $publisher = null;
                 if ($edition['publisherId'])
-                    $publisher = get_publisher($edition['publisherId']);
+                    $publisher = get_publisher($v['publisherId']);
                 ?>
                 <tr id="book-<?= $v['uniqueBookId'] ?>">
                     <td>00<?= $v['uniqueBookId'] ?><?= calc_bcd_cd($v['uniqueBookId']) ?></td>
                     <td>
-                        <?= htmlentities($edition['title']) ?>
-                        <?php if ($edition['bookDisambiguation']) : ?>
-                            (<?= htmlentities($edition['bookDisambiguation']) ?>)
+                        <?= htmlentities($v['title']) ?>
+                        <?php if ($v['bookDisambiguation']) : ?>
+                            (<?= htmlentities($v['bookDisambiguation']) ?>)
                         <?php endif; ?>
                     </td>
                     <td>

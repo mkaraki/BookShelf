@@ -46,19 +46,14 @@ function get_books($shelfId)
     return DB::query('SELECT * FROM bookCollection WHERE belongShelf = %d', $shelfId);
 }
 
-function get_edition($editionId)
-{
-    return DB::queryFirstRow('SELECT * FROM editionInfo WHERE editionId = %d', $editionId);
-}
-
 function get_publisher($publisherId)
 {
     return DB::queryFirstRow('SELECT * FROM publisherInfo WHERE publisherId = %d', $publisherId);
 }
 
-function get_authors($editionId)
+function get_authors($bookId)
 {
-    $links = DB::query('SELECT * FROM editionAuthorLinker WHERE editionId = %d', $editionId);
+    $links = DB::query('SELECT * FROM bookAuthorLinker WHERE uniqueBookId = %d', $bookId);
     $authors = [];
     foreach ($links as $link) {
         $authors[] = DB::queryFirstRow('SELECT * FROM authorInfo WHERE authorId = %d', $link['authorId']);

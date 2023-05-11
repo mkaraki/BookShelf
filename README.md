@@ -13,9 +13,12 @@ graph LR
     BookCase -- has few --> BookShelf
     BookShelf -- Part of --> BookCase
 
-    Edition -- one of edition --> Book
-    Book -- Content --> Edition
     Book -- in --> BookShelf
+
+    Author -- write --> Book
+    Book -- written by several --> Author
+
+    Publisher -- publish --> Book
 ```
 
 ## Barcode structure
