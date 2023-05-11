@@ -1,0 +1,3 @@
+[submodule "lib/meekrodb"]
+	path = lib/meekrodb
+	url = https://github.com/SergeyTsalkov/meekrodb.git
