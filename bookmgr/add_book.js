@@ -21,17 +21,19 @@ function addAuthorNum(preDefinedAuthor = '') {
     internalAuthorId.setAttribute('value', '');
     newAuthorHolder.appendChild(internalAuthorId);
 
-    const clearAuthor = document.createElement('button');
-    clearAuthor.setAttribute('type', 'button');
-    clearAuthor.setAttribute('onclick', `clearAuthor(${newAuthorNum})`);
-    clearAuthor.innerText = '×';
-    newAuthorHolder.appendChild(clearAuthor);
-
     const newAuthorSearch = document.createElement('button');
     newAuthorSearch.setAttribute('type', 'button');
     newAuthorSearch.setAttribute('onclick', `searchAuthor(${newAuthorNum})`);
+    newAuthorSearch.setAttribute('class', 'btn btn-primary btn-sm m-1');
     newAuthorSearch.innerText = '🔎';
     newAuthorHolder.appendChild(newAuthorSearch);
+
+    const clearAuthor = document.createElement('button');
+    clearAuthor.setAttribute('type', 'button');
+    clearAuthor.setAttribute('onclick', `clearAuthor(${newAuthorNum})`);
+    clearAuthor.setAttribute('class', 'btn btn-danger btn-sm m-1');
+    clearAuthor.innerText = '×';
+    newAuthorHolder.appendChild(clearAuthor);
 
     authorHolder.appendChild(newAuthorHolder);
 }

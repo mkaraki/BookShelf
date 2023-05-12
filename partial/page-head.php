@@ -6,43 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlentities($page_title ?? 'BookShelf') ?></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            margin: 5px;
-            width: calc(100vw - 10px);
-        }
-
-        label {
-            margin-top: 30px;
-        }
-
-        input[type="text"],
-        input[type="password"],
-        input[type="email"],
-        select {
-            display: block;
-            width: calc(100% - 10px);
-            margin: 5px;
-        }
-
-        input[type="submit"] {
-            margin: 15px;
-            margin-left: 0;
-        }
-
         header {
             border-bottom: 1px solid black;
         }
     </style>
 </head>
 
-<body>
+<body class="m-3">
     <?php if (!isset($page_no_menu)) : ?>
         <header>
             Hello <?= $login_name ?>.

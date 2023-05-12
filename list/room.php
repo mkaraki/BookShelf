@@ -17,11 +17,13 @@ if (!$room)
 
 <section>
     <?php if ($login_is) : ?>
-        <form action="create_case.php">
-            <label for="name">Case Name</label>
-            <input type="text" name="name" id="name" maxlength="256" required>
-            <input type="hidden" name="parent" value="<?= $_GET['id'] ?>">
-            <button type="submit">Create Room in site</button>
+        <form action="create_case.php" class="mb-3">
+            <div class="mb-3">
+                <label for="name" class="form-label">Case Name</label>
+                <input type="text" name="name" id="name" maxlength="256" required class="form-control">
+                <input type="hidden" name="parent" value="<?= $_GET['id'] ?>">
+            </div>
+            <button type="submit" class="btn btn-primary">Create Case</button>
         </form>
     <?php endif; ?>
 </section>

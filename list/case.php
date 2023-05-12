@@ -17,11 +17,13 @@ if (!$case)
 
 <section>
     <?php if ($login_is) : ?>
-        <form action="create_shelf.php">
-            <label for="name">Shelf Number</label>
-            <input type="number" name="number" id="name" required min="0" max="255">
-            <input type="hidden" name="parent" value="<?= $_GET['id'] ?>">
-            <button type="submit">Create Shelf in case</button>
+        <form action="create_shelf.php" class="mb-3">
+            <div class="mb-3">
+                <label for="name" class="form-label">Shelf Number</label>
+                <input type="number" name="number" id="name" required min="0" max="255" class="form-control">
+                <input type="hidden" name="parent" value="<?= $_GET['id'] ?>">
+            </div>
+            <button type="submit" class="btn btn-primary">Create Shelf</button>
         </form>
     <?php endif; ?>
 </section>

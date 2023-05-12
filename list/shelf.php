@@ -27,14 +27,14 @@ $case = get_case($shelf['parentCase']);
 
 <section>
     <h2>Books</h2>
-    <table>
+    <table class="table">
         <thead>
             <tr>
-                <th>BookId</th>
-                <th>Title</th>
-                <th>Publisher</th>
-                <th>Authors</th>
-                <th>Actions</th>
+                <th scope="col">BookId</th>
+                <th scope="col">Title</th>
+                <th scope="col">Publisher</th>
+                <th scope="col">Authors</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
