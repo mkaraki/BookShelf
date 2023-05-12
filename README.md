@@ -24,10 +24,10 @@ graph LR
 ## Barcode structure
 
 ```
-NN n+ d
+0N n+ d
 ```
 
-- `NN`: Code type
+- `0N`: Code type
 - `n+`: Database Id Number
 - `d `: sum % 10 of `n+`
 
@@ -40,8 +40,10 @@ Code types:
 
 ## Setup
 
+### Manual
+
 1. Copy all php files in root directory.
-2. Copy `internal` and `partial` directory.
+2. Copy all directories except `lib` and `dbinit`.
 3. Rename `_config.php.example` to `_config.php`.
 4. Edit `_config.php`.
 5. Download `db.class.php` from [MeekroDB GitHub](https://github.com/SergeyTsalkov/meekrodb) and place under `lib/meekrodb/`.
