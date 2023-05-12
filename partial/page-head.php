@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/../internal/login_info.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 

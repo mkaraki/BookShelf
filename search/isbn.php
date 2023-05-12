@@ -1,0 +1,50 @@
+<?php require __DIR__ . '/../internal/lib_util.php'; ?>
+<?php
+
+$page_title = 'Search ISBN - Book Shelf';
+require __DIR__ . '/../partial/page-head.php';
+?>
+
+<h1>ISBN Search</h1>
+<hr />
+
+<section>
+    <form action="" method="get" class="mb-3">
+        <div class="mb-3">
+            <label for="sname" class="form-label">ISBN</label>
+            <input type="text" id="sname" name="isbn" value="<?= htmlentities($_GET['isbn'] ?? '') ?>" required class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a href="code.php" class="btn btn-secondary" role="button">Barcode</a>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title (Publisher)</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (isset($_GET['isbn']) && is_numeric($_GET['isbn']) && strlen($_GET['isbn']) === 13) : ?>
+                <?php foreach (search_book_isbn($_GET['isbn']) as $v) : ?>
+                    <tr>
+                        <td>
+                            <a><?= htmlentities($v['bookName']) ?></a>
+                            <?php if ($v['publisherName'] != null) : ?>
+                                (<?= htmlentities($v['publisherName']) ?>)
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" onclick="alert(<?= htmlspecialchars(json_encode('Shelf ' . $v['shelfNumber'] . ', ' . $v['caseName'] . ', ' . $v['roomName'] . ', ' . $v['siteName'])) ?>)">
+                                <?= htmlentities($v['siteName']) ?>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</section>
+
+<?php require __DIR__ . '/../partial/page-end.php'; ?>

@@ -15,7 +15,7 @@ if (
     isset($_POST['type']) &&
     is_numeric($_POST['type'])
 ) {
-    $user = DB::queryFirstRow('SELECT * FROM userInfo WHERE userEmail = %s', $_POST['email']);
+    $user = DB::queryFirstRow('SELECT * FROM userInfo WHERE userMail = %s', $_POST['email']);
     if ($user !== null) {
         die('User already exists');
     }
@@ -25,8 +25,10 @@ if (
         die('Invalid type');
 
     $pwd = $_POST['password'] ?? null;
-    if (!isset($_POST['loginable']) && $_POST['loginable'] === '1' && $pwd !== null)
+    if (isset($_POST['loginable']) && $_POST['loginable'] === '1' && $pwd !== null)
         $pwd = password_hash($pwd, PASSWORD_DEFAULT);
+    else
+        $pwd = null;
 
     DB::insert('userInfo', [
         'userName' => $_POST['name'],
@@ -34,4 +36,8 @@ if (
         'userPasswordHash' => $pwd,
         'userType' => $type,
     ]);
+} else {
+    die('No required data found');
 }
+?>
+Added

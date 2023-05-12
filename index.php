@@ -5,6 +5,13 @@
 <h1>BookShelf</h1>
 
 <section>
+    Menu:
+    <ul>
+        <li><a href="search/isbn.php">ISBN Search</a></li>
+    </ul>
+</section>
+
+<section>
     Sites:
     <ul>
         <?php foreach (get_sites() as $site) : ?>

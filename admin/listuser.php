@@ -17,44 +17,49 @@ require_once __DIR__ . '/../partial/page-head.php';
     <h2>Create User</h2>
     <form action="createuser.php" method="POST">
         <section>
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" required />
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" name="name" id="name" required class="form-control" />
+            </div>
 
-            <br />
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input type="email" name="email" id="email" required class="form-control" />
+            </div>
 
-            <label for="email">E-mail</label>
-            <input type="email" name="email" id="email" required />
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" id="password" class="form-control" />
+            </div>
 
-            <br />
+            <div class="mb-3">
+                <input type="checkbox" name="loginable" id="loginable" checked value="1" class="form-check-input" />
+                <label for="loginable" class="form-check-label">Able to login?</label>
+            </div>
 
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" />
-
-            <br />
-
-            <label for="loginable">Able to login?</label>
-            <input type="checkbox" name="loginable" id="loginable" checked value="1" />
-
-            <br />
-
-            <label for="type">Type</label>
-            <select name="type" id="type">
-                <option value="0">User</option>
-                <option value="1">Admin</option>
-                <option value="2">User Group (Virtual User)</option>
-            </select>
+            <div class="mb-3">
+                <label for="type" class="form-label">Type</label>
+                <select name="type" id="type" class="form-select">
+                    <option value="0">User</option>
+                    <option value="1">Admin</option>
+                    <option value="2">User Group (Virtual User)</option>
+                </select>
+            </div>
         </section>
-        <input type="submit" value="Create">
+
+        <div class="mb-3">
+            <input type="submit" value="Create" class="btn btn-primary">
+        </div>
     </form>
 </div>
 
-<table>
+<table class="table">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>E-mail</th>
-            <th>Type</th>
-            <th>Action</th>
+            <th scope="col">Name</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Type</th>
+            <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -62,8 +67,23 @@ require_once __DIR__ . '/../partial/page-head.php';
             <tr>
                 <td><?= htmlentities($v['userName']) ?></td>
                 <td><?= htmlentities($v['userMail']) ?></td>
-                <td><?= htmlentities($v['userType']) ?></td>
-                <td></td>
+                <td>
+                    <?= htmlentities($v['userType']) ?>
+                    <?php if ($v['userPasswordHash'] === null) : ?>
+                        <span class="badge bg-danger">No Login</span>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php if ($login_id !== $v['userId']) : ?>
+                        <form action="usermod.php" method="post" onsubmit="return confirm('Really?')">
+                            <input type="hidden" name="id" value="<?= $v['userId'] ?>">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                        </form>
+                    <?php else : ?>
+                        <span class="badge bg-secondary">You</span>
+                    <?php endif; ?>
+                </td>
             </tr>
         <?php endforeach; ?>
     </tbody>

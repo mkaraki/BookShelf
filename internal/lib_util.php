@@ -71,6 +71,21 @@ function search_publishers($name)
     return DB::query('SELECT * FROM publisherInfo WHERE publisherName LIKE %ss', $name);
 }
 
+function search_book_isbn($isbn)
+{
+    return DB::query(
+        'SELECT b.uniqueBookId, b.bookName, b.bookRead, p.publisherName, b.isbn, b.bookDisambiguation, sl.shelfNumber, c.caseName, r.roomName, s.siteName
+        FROM bookCollection b, shelfInfo sl, caseInfo c, roomInfo r, siteInfo s, publisherInfo p
+        WHERE isbn = %d AND
+        b.belongShelf = sl.shelfId AND
+        sl.parentCase = c.caseId AND
+        c.parentRoom = r.roomId AND
+        r.parentSite = s.siteId AND
+        b.publisherId = p.publisherId',
+        $isbn
+    );
+}
+
 function calc_bcd_cd($code)
 {
     $code = str_split(strval($code));
