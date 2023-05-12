@@ -73,7 +73,7 @@ $page_title = 'Add book - Book Shelf';
         <input type="text" name="isbn" id="isbn" maxlength="13" class="form-control form-control-sm">
     </section>
 
-    <input type="submit" value="Add Book">
+    <input type="submit" value="Add Book" class="btn btn-primary">
 </form>
 
 
