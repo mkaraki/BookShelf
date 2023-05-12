@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../internal/db.php';
 require_once __DIR__ . '/../internal/auth.php';
 
-if ($login_type !== 1) {
+if ($login_type !== '1') {
     die('You are not admin');
 }
 

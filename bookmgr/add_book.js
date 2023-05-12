@@ -11,7 +11,6 @@ function addAuthorNum(preDefinedAuthor = '') {
     newAuthor.setAttribute('name', `author${newAuthorNum}`);
     newAuthor.setAttribute('id', `author${newAuthorNum}`);
     newAuthor.setAttribute('class', 'form-control');
-    newAuthor.setAttribute('placeholder', '著者名');
     newAuthor.setAttribute('value', preDefinedAuthor);
     newAuthorHolder.appendChild(newAuthor);
 

@@ -3,12 +3,15 @@
 ?>
 <?php
 
-if (!isset($_GET['name']) || empty($_GET['name']))
+if (!isset($_GET['name']))
     die('No required data found');
 
 $page_title = 'Search publisher - Book Shelf';
 ?>
-<?php require __DIR__ . '/../partial/page-head.php'; ?>
+<?php
+$page_no_menu = true;
+require __DIR__ . '/../partial/page-head.php';
+?>
 
 <style>
     .err {
@@ -36,12 +39,14 @@ $page_title = 'Search publisher - Book Shelf';
             </tr>
         </thead>
         <tbody>
-            <?php foreach (search_publishers($_GET['name']) as $v) : ?>
-                <tr>
-                    <td><a href="javascript:void(0)" onclick="window.opener.setPublisherId('<?= $v['publisherId'] ?>'); window.close();"><?= htmlentities($v['publisherName']) ?></a></td>
-                    <td><?= htmlentities($v['publisherDisambiguation']) ?></td>
-                </tr>
-            <?php endforeach; ?>
+            <?php if (!empty($_GET['name'])) : ?>
+                <?php foreach (search_publishers($_GET['name']) as $v) : ?>
+                    <tr>
+                        <td><a href="javascript:void(0)" onclick="window.opener.setPublisherId('<?= $v['publisherId'] ?>'); window.close();"><?= htmlentities($v['publisherName']) ?></a></td>
+                        <td><?= htmlentities($v['publisherDisambiguation']) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 </section>

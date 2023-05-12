@@ -2,12 +2,7 @@
 <?php require __DIR__ . '/internal/login_info.php'; ?>
 <?php require __DIR__ . '/partial/page-head.php'; ?>
 
-<section>
-    Hello <?= $login_name ?>.
-    <?php if (!$login_is) : ?>
-        <a href="dash.php">Login</a>
-    <?php endif; ?>
-</section>
+<h1>BookShelf</h1>
 
 <section>
     Sites:

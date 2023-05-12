@@ -3,13 +3,6 @@
 <?php require __DIR__ . '/partial/page-head.php'; ?>
 
 <section>
-    Hello <?= $login_name ?>.
-    <?php if (!$login_is) : ?>
-        <a href="dash.php">Login</a>
-    <?php endif; ?>
-</section>
-
-<section>
     Sites:
     <ul>
         <?php foreach (get_sites() as $site) : ?>

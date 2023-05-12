@@ -1,10 +1,10 @@
 <?php
 require_once __DIR__ . '/../internal/db.php';
 
-if (DB::queryFirstField('SELECT count(userId) WHERE userType = 1 AND userPasswordHash <> NULL') > 0) {
+if (DB::queryFirstField('SELECT count(*) FROM userInfo WHERE userType = 1 AND userPasswordHash IS NOT NULL') > 0) {
     require_once __DIR__ . '/../internal/auth.php';
 
-    if ($login_type !== 1) {
+    if ($login_type !== '1') {
         die('You are not admin');
     }
 };
@@ -21,7 +21,7 @@ if (
         die('Passwords do not match');
     }
 
-    $user = DB::queryFirstRow('SELECT * FROM userInfo WHERE userEmail = %s', $_POST['email']);
+    $user = DB::queryFirstRow('SELECT * FROM userInfo WHERE userMail = %s', $_POST['email']);
     if ($user !== null) {
         die('User already exists');
     }

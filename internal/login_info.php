@@ -16,5 +16,6 @@ if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])) {
         die('No user found');
 
     $login_name = $user['userName'];
+    $login_is = true;
     $login_type = $user['userType'];
 }
