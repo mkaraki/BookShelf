@@ -63,18 +63,6 @@ $case = get_case($shelf['parentCase']);
                         <?php endforeach; ?>
                     </td>
                     <td>
-                        <?php if ($login_is) : ?>
-                            <a href="edit_book.php?id=<?= $v['bookId'] ?>">Edit</a>
-                            <a href="delete_book.php?id=<?= $v['bookId'] ?>">Delete</a>
-                        <?php endif; ?>
-                    </td>
-                    <td>
-                        <?php if ($login_is) : ?>
-                            <form action="delete_book" method="POST">
-                                <input type="hidden" name="id" value="<?= $v['bookId'] ?>">
-                                <input type="submit" value="Delete">
-                            </form>
-                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
