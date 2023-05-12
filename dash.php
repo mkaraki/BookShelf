@@ -2,6 +2,15 @@
 <?php require __DIR__ . '/internal/auth.php'; ?>
 <?php require __DIR__ . '/partial/page-head.php'; ?>
 
+<h1>BookShelf Dashboard</h1>
+
+<section>
+    Menu:
+    <ul>
+        <li><a href="search/isbn.php">ISBN Search</a></li>
+    </ul>
+</section>
+
 <section>
     Sites:
     <ul>
