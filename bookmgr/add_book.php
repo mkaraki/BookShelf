@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../internal/db.php';
-//require_once __DIR__ . '/../internal/auth.php';
+require_once __DIR__ . '/../internal/auth.php';
 require_once __DIR__ . '/../internal/lib_util.php';
 
 if (

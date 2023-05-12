@@ -17,11 +17,11 @@ if (!$site)
 
 <section>
     <?php if ($login_is) : ?>
-        <form action="create_room.php" class="mb-3">
+        <form action="create_room.php" class="mb-3" method="POST">
             <div class="mb-3">
                 <label for="name" class="from-label">Room Name</label>
                 <input type="text" name="name" id="name" maxlength="256" required class="form-control">
-                <input type="hidden" name="parent" value="<?= $_GET['id'] ?>">
+                <input type="hidden" name="p" value="<?= $_GET['id'] ?>">
             </div>
             <button type="submit" class="btn btn-primary">Create Room</button>
         </form>
