@@ -1,4 +1,4 @@
-function addAuthorNum(preDefinedAuthor = '') {
+function addAuthorNum(preDefinedAuthor = '', preDefinedAuthorId = null) {
     const authorNum = parseInt(document.getElementById('authorNum').value);
     const newAuthorNum = authorNum + 1;
     document.getElementById('authorNum').value = newAuthorNum;
@@ -12,13 +12,15 @@ function addAuthorNum(preDefinedAuthor = '') {
     newAuthor.setAttribute('id', `author${newAuthorNum}`);
     newAuthor.setAttribute('class', 'form-control');
     newAuthor.setAttribute('value', preDefinedAuthor);
+    if (preDefinedAuthor !== null)
+        newAuthor.setAttribute('readonly', '1');
     newAuthorHolder.appendChild(newAuthor);
 
     const internalAuthorId = document.createElement('input');
     internalAuthorId.setAttribute('type', 'hidden');
     internalAuthorId.setAttribute('name', `internalAuthorId${newAuthorNum}`);
     internalAuthorId.setAttribute('id', `internalAuthorId${newAuthorNum}`);
-    internalAuthorId.setAttribute('value', '');
+    internalAuthorId.setAttribute('value', preDefinedAuthor ?? '');
     newAuthorHolder.appendChild(internalAuthorId);
 
     const newAuthorSearch = document.createElement('button');
@@ -76,13 +78,23 @@ function setPublisherId(id) {
     return true;
 }
 
-function putSearchedData(name, nameRead, authors, publisher, isbn = '') {
+function putSearchedAuthorData(authors, codes) {
     for (let i = 0; i < authors.length; i++) {
-        addAuthorNum(authors[i]);
+        addAuthorNum(authors[i], codes[i]);
     }
+}
+
+function putSearchedPublisherData(publisher, code = null) {
+    document.getElementById('publisher').value = publisher;
+    if (code !== null) {
+        document.getElementById('internalPublisherId').value = code;
+        document.getElementById('publisher').setAttribute('readonly', '1');
+    }
+}
+
+function putSearchedData(name, nameRead, isbn = '') {
     document.getElementById('name').value = name;
     document.getElementById('name_read').value = nameRead;
-    document.getElementById('publisher').value = publisher;
     document.getElementById('isbn').value = isbn;
 }
 
@@ -110,7 +122,7 @@ function searchIsbnNDL(isbn) {
 
             const publisher = records.getElementsByTagName('dc:publisher')[0].textContent;
 
-            putSearchedData(title, titleRead, [author], publisher, isbn)
+            postSearch(title, titleRead, [author], publisher, isbn);
         });
 }
 
@@ -127,7 +139,46 @@ function searchIsbnGoogleBooks(isbn) {
             const d = data.items[0].volumeInfo;
             const title = d.title;
             const authors = d.authors;
-            putSearchedData(title, '', authors, '', isbn);
+            postSearch(title, '', authors, '', isbn);
+        });
+}
+
+function postSearch(title, titleRead, authors, publisher, isbn) {
+    const f = new FormData();
+    f.set('isbn', isbn)
+    f.set('publisher', publisher)
+    f.set('authornum', authors.length)
+    for (let i = 0; i < authors.length; i++) {
+        f.set('author' + (i + 1), authors[i]);
+    }
+
+    console.log(f);
+
+    fetch('isbn_post.php', {
+        method: 'POST',
+        body: f
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data.isbn)
+                if (data.isbn.length > 0) {
+                    alert('Same ISBN already exists.');
+                }
+
+            if (data.publisher)
+                if (data.publisher.length > 0)
+                    putSearchedPublisherData(data.publishers[0].publisherName, data.publishers[0].publisherId);
+
+            if (data.authors)
+                for (let i = 0; i < authors.length; i++) {
+                    if (data.authors[i].length < 1)
+                        putSearchedAuthorData([authors[i]], ['']);
+                    else
+                        putSearchedAuthorData([data.authors[i][0].authorName], [data.authors[i][0].authorId]);
+                }
+
+            putSearchedData(title, titleRead, isbn);
         });
 }
 
