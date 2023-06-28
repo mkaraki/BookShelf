@@ -47,4 +47,10 @@ require __DIR__ . '/../partial/page-head.php';
     </table>
 </section>
 
+<script>
+    document.addEventListener('load', () => {
+        document.getElementById('sname').focus();
+    });
+</script>
+
 <?php require __DIR__ . '/../partial/page-end.php'; ?>
