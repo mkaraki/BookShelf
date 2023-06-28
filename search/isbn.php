@@ -18,15 +18,15 @@ require __DIR__ . '/../partial/page-head.php';
         <a href="code.php" class="btn btn-secondary" role="button">Barcode</a>
     </form>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Title (Publisher)</th>
-                <th>Location</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (isset($_GET['isbn']) && is_numeric($_GET['isbn']) && strlen($_GET['isbn']) === 13) : ?>
+    <?php if (isset($_GET['isbn']) && is_numeric($_GET['isbn']) && strlen($_GET['isbn']) === 13) : ?>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title (Publisher)</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
                 <?php foreach (search_book_isbn($_GET['isbn']) as $v) : ?>
                     <tr>
                         <td>
@@ -42,9 +42,9 @@ require __DIR__ . '/../partial/page-head.php';
                         </td>
                     </tr>
                 <?php endforeach; ?>
-            <?php endif; ?>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    <?php endif; ?>
 </section>
 
 <script>
