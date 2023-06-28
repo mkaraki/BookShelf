@@ -12,7 +12,7 @@ require __DIR__ . '/../partial/page-head.php';
     <form action="" method="get" class="mb-3">
         <div class="mb-3">
             <label for="sname" class="form-label">ISBN</label>
-            <input type="text" id="sname" name="isbn" value="<?= htmlentities($_GET['isbn'] ?? '') ?>" required class="form-control">
+            <input type="text" id="sname" name="isbn" value="" required class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
         <a href="code.php" class="btn btn-secondary" role="button">Barcode</a>
