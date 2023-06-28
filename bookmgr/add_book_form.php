@@ -15,9 +15,9 @@ $page_title = 'Add book - Book Shelf';
     }
 </style>
 
-<?php if (isset($_GET['added']) && is_numeric($_GET['added'])) : ?>
+<?php if (isset($_GET['added']) && $_GET['added'] === '1') : ?>
     <div class="alert alert-success" role="alert">
-        Book added. <a href="../list/shelf.php?id=<?= $_GET['added'] ?>" class="alert-link">See entry</a>
+        Book added. <a href="../list/shelf.php?id=<?= $_GET['id'] ?>" class="alert-link">See entry</a>
     </div>
 <?php endif; ?>
 

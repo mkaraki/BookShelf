@@ -56,4 +56,4 @@ foreach ($linkAuthorIds as $v) {
 }
 
 http_response_code(303);
-header('Location: add_book_form.php?added=' . $_POST['shelfId'] . '&id=' . $bookId);
+header('Location: add_book_form.php?added=1&id=' . $_POST['shelfId'] . '&addedid=' . $bookId);
