@@ -48,9 +48,9 @@ require __DIR__ . '/../partial/page-head.php';
 </section>
 
 <script>
-    document.addEventListener('load', () => {
+    document.onload = () => {
         document.getElementById('sname').focus();
-    });
+    };
 </script>
 
 <?php require __DIR__ . '/../partial/page-end.php'; ?>
