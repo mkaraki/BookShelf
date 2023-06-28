@@ -51,6 +51,10 @@ $case = get_case($shelf['parentCase']);
                         <?php if ($v['bookDisambiguation']) : ?>
                             (<?= htmlentities($v['bookDisambiguation']) ?>)
                         <?php endif; ?>
+                        <?php if ($v['isbn']) : ?>
+                            <br />
+                            <small><?= htmlentities($v['isbn']) ?></small>
+                        <?php endif; ?>
                     </td>
                     <td>
                         <?php if ($publisher) : ?>
