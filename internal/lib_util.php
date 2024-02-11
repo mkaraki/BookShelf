@@ -1,7 +1,27 @@
 <?php
 require_once __DIR__ . '/db.php';
 
-function get_sites()
+function get_bookStoreTree()
+{
+    $sites = get_sites();
+
+    for($i = 0; $i < count($sites); $i++) {
+        $sites[$i]['rooms'] = get_rooms($sites[$i]['siteId']);
+        for($j = 0; $j < count($sites[$i]['rooms']); $j++) {
+            $sites[$i]['rooms'][$j]['cases'] = get_cases($sites[$i]['rooms'][$j]['roomId']);
+            for($k = 0; $k < count($sites[$i]['rooms'][$j]['cases']); $k++) {
+                $sites[$i]['rooms'][$j]['cases'][$k]['shelfs'] = get_shelfs($sites[$i]['rooms'][$j]['cases'][$k]['caseId']);
+                for($l = 0; $l < count($sites[$i]['rooms'][$j]['cases'][$k]['shelfs']); $l++) {
+                    $sites[$i]['rooms'][$j]['cases'][$k]['shelfs'][$l]['books'] = get_books($sites[$i]['rooms'][$j]['cases'][$k]['shelfs'][$l]['shelfId']);
+                }
+            }
+        }
+    }
+
+    return $sites;
+}
+
+function get_sites() : array
 {
     return DB::query('SELECT * FROM siteInfo');
 }
@@ -9,6 +29,24 @@ function get_sites()
 function get_site($siteId)
 {
     return DB::queryFirstRow('SELECT * FROM siteInfo WHERE siteId = %d', $siteId);
+}
+
+function get_bookStoreTreeWithSite($siteId)
+{
+    $site = get_site($siteId);
+
+    $site['rooms'] = get_rooms($site['siteId']);
+    for($j = 0; $j < count($site['rooms']); $j++) {
+        $site['rooms'][$j]['cases'] = get_cases($site['rooms'][$j]['roomId']);
+        for($k = 0; $k < count($site['rooms'][$j]['cases']); $k++) {
+            $site['rooms'][$j]['cases'][$k]['shelfs'] = get_shelfs($site['rooms'][$j]['cases'][$k]['caseId']);
+            for($l = 0; $l < count($site['rooms'][$j]['cases'][$k]['shelfs']); $l++) {
+                $site['rooms'][$j]['cases'][$k]['shelfs'][$l]['books'] = get_books($site['rooms'][$j]['cases'][$k]['shelfs'][$l]['shelfId']);
+            }
+        }
+    }
+
+    return $site;
 }
 
 function get_rooms($siteId)

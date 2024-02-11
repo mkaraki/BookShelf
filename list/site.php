@@ -29,10 +29,29 @@ if (!$site)
 </section>
 
 <section>
-    Rooms:
+    <h2>Rooms:</h2>
     <ul>
-        <?php foreach (get_rooms($_GET['id']) as $v) : ?>
-            <li><a href="room.php?id=<?= $v['roomId'] ?>"><?= htmlentities($v['roomName']) ?></a></li>
+        <?php foreach (get_bookStoreTreeWithSite($_GET['id'])['rooms'] as $room) : ?>
+            <li>
+                <a href="room.php?id=<?= $room['roomId'] ?>"><?= htmlentities($room['roomName']) ?></a>
+                <ul>
+                    <?php foreach ($room['cases'] as $case) : ?>
+                        <li>
+                            <a href="case.php?id=<?= $case['caseId'] ?>"><?= htmlentities($case['caseName']) ?></a>
+                            <div>
+                                <?php foreach ($case['shelfs'] as $shelf) : ?>
+                                    <span>
+                                        <a href="shelf.php?id=<?= $shelf['shelfId'] ?>">Case <?= htmlentities($shelf['shelfNumber']) ?></a>
+
+                                        (<code>01<?= $shelf['shelfId'] ?><?= calc_bcd_cd($shelf['shelfId']) ?></code>,
+                                        <?= count($shelf['books']) ?> books available)
+                                    </span>,
+                                <?php endforeach; ?>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </li>
         <?php endforeach; ?>
     </ul>
 </section>

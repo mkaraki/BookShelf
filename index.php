@@ -12,10 +12,37 @@
 </section>
 
 <section>
-    Sites:
+    <h2>Storages:</h2>
+
     <ul>
-        <?php foreach (get_sites() as $site) : ?>
-            <li><a href="list/site.php?id=<?= $site['siteId'] ?>"><?= htmlentities($site['siteName']) ?></a></li>
+        <?php foreach (get_bookStoreTree() as $site) : ?>
+            <li>
+                <a href="list/site.php?id=<?= $site['siteId'] ?>"><?= htmlentities($site['siteName']) ?></a>
+                <ul>
+                    <?php foreach ($site['rooms'] as $room) : ?>
+                        <li>
+                            <a href="list/room.php?id=<?= $room['roomId'] ?>"><?= htmlentities($room['roomName']) ?></a>
+                            <ul>
+                                <?php foreach ($room['cases'] as $case) : ?>
+                                    <li>
+                                        <a href="list/case.php?id=<?= $case['caseId'] ?>"><?= htmlentities($case['caseName']) ?></a>
+                                        <div>
+                                            <?php foreach ($case['shelfs'] as $shelf) : ?>
+                                                <span>
+                                                    <a href="list/shelf.php?id=<?= $shelf['shelfId'] ?>">Case <?= htmlentities($shelf['shelfNumber']) ?></a>
+
+                                                    (<code>01<?= $shelf['shelfId'] ?><?= calc_bcd_cd($shelf['shelfId']) ?></code>,
+                                                    <?= count($shelf['books']) ?> books available)
+                                                </span>, 
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </li>
         <?php endforeach; ?>
     </ul>
 </section>
