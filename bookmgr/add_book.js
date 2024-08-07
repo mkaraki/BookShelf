@@ -158,7 +158,7 @@ function postSearch(title, titleRead, authors, publisher, isbn) {
 
             if (data.publisher)
                 if (data.publisher.length > 0)
-                    putSearchedPublisherData(data.publishers[0].publisherName, data.publishers[0].publisherId);
+                    putSearchedPublisherData(data.publisher[0].publisherName, data.publisher[0].publisherId);
 
             if (data.authors)
                 for (let i = 0; i < authors.length; i++) {
