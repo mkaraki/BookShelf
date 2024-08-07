@@ -34,33 +34,21 @@ foreach($xml->records as $recordHost)
 
     $bookinfo = [];
 
-    try
-    {
-        $title = (string) $rdf->xpath('.//dcterms:title')[0];
-        $bookinfo['title'] = $title;
-    }
-    catch(Exception $e) {}
+    $title = $rdf->xpath('.//dcterms:title')[0] ?? '';
+    if ($title !== '')
+        $bookinfo['title'] = (string) $title;
 
-    try
-    {
-        $titleRead = (string) $rdf->xpath('.//dc:title/rdf:Description/dcndl:transcription')[0];
-        $bookinfo['titleRead'] = $titleRead;
+    $titleRead = $rdf->xpath('.//dc:title/rdf:Description/dcndl:transcription')[0] ?? '';
+    if ($titleRead !== '')
+        $bookinfo['titleRead'] = (string) $titleRead;
 
-        try
-        {
-            $titleRead = (string) $rdf->xpath('.//dcndl:volume/rdf:Description/dcndl:transcription')[0];
-            $bookinfo['titleRead'] .= ' ' . $titleRead;
-        }
-        catch(Exception $e) {}
-    }
-    catch(Exception $e) {}
+    $titleRead = $rdf->xpath('.//dcndl:volume/rdf:Description/dcndl:transcription')[0] ?? '';
+    if ($titleRead !== '')
+        $bookinfo['titleRead'] .= ' ' . ((string) $titleRead);
 
-    try
-    {
-        $publisher = (string) $rdf->xpath('.//dcterms:publisher/foaf:Agent/foaf:name')[0];
-        $bookinfo['publisher'] = $publisher;
-    }
-    catch(Exception $e) {}
+    $publisher = $rdf->xpath('.//dcterms:publisher/foaf:Agent/foaf:name')[0] ?? '';
+    if ($publisher !== '')
+        $bookinfo['publisher'] = (string)$publisher;
 
     $toret[] = $bookinfo;
 }
