@@ -20,7 +20,7 @@ function addAuthorNum(preDefinedAuthor = '', preDefinedAuthorId = null) {
     internalAuthorId.setAttribute('type', 'hidden');
     internalAuthorId.setAttribute('name', `internalAuthorId${newAuthorNum}`);
     internalAuthorId.setAttribute('id', `internalAuthorId${newAuthorNum}`);
-    internalAuthorId.setAttribute('value', preDefinedAuthor ?? '');
+    internalAuthorId.setAttribute('value', preDefinedAuthorId ?? '');
     newAuthorHolder.appendChild(internalAuthorId);
 
     const newAuthorSearch = document.createElement('button');
@@ -99,30 +99,20 @@ function putSearchedData(name, nameRead, isbn = '') {
 }
 
 function searchIsbnNDL(isbn) {
-    const url = `https://iss.ndl.go.jp/api/opensearch?isbn=${isbn}&cnt=1`;
-    fetch(url, {
-        mode: 'no-cors'
-    })
-        .then(response => response.text())
-        .then(text => new window.DOMParser().parseFromString(text, "text/xml"))
+    const url = `/search/proxy/jp_ndl.php?isbn=${isbn}`;
+    fetch(url)
+        .then(response => response.json())
         .then(data => {
-            let records = data.documentElement.getElementsByTagName('item');
-            if (records.length < 1) {
+            if (data.length < 1) {
                 alert('No data');
                 return;
             }
 
-            records = records[0];
-            const title = records.getElementsByTagName('title')[0].textContent;
-            const titleRead = records.getElementsByTagName('dcndl:titleTranscription')[0].textContent;
-            const authorE = records.getElementsByTagName('author');
-            let author = '';
-            if (authorE.length > 1)
-                author = [0].textContent;
-
-            const publisher = records.getElementsByTagName('dc:publisher')[0].textContent;
-
-            postSearch(title, titleRead, [author], publisher, isbn);
+            const d = data[0];
+            const title = d.title;
+            const titleRead = d.titleRead;
+            const publisher = d.publisher;
+            postSearch(title, titleRead, [], publisher, isbn);
         });
 }
 
@@ -183,8 +173,8 @@ function postSearch(title, titleRead, authors, publisher, isbn) {
 }
 
 function searchIsbn() {
-    //searchIsbnNDL(document.getElementById('sisbn').value);
-    searchIsbnGoogleBooks(document.getElementById('sisbn').value);
+    searchIsbnNDL(document.getElementById('sisbn').value);
+    //searchIsbnGoogleBooks(document.getElementById('sisbn').value);
 
     document.getElementById('sisbn').value = '';
 }
