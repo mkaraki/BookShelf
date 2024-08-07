@@ -72,10 +72,6 @@ $case = get_case($shelf['parentCase']);
                                 <input type="hidden" name="id" value="<?= $v['uniqueBookId'] ?>" />
                                 <input type="submit" value="Remove" />
                             </form>
-                            <form action="../bookmgr/remove_book.php" method="post">
-                                <input type="hidden" name="id" value="<?= $v['uniqueBookId'] ?>" />
-                                <input type="submit" value="Remove" />
-                            </form>
                         <?php endif; ?>
                     </td>
                 </tr>
