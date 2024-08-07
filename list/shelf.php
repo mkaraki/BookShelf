@@ -14,7 +14,7 @@ $case = get_case($shelf['parentCase']);
 
 <section>
     <h1>
-        <small><?= htmlentities($case['caseName']) ?></small><br />
+        <small><a href="case.php?id=<?= $shelf['parentCase'] ?>"><?= htmlentities($case['caseName']) ?></a></small><br />
         Shelf <?= $shelf['shelfNumber'] ?>: 01<?= $shelf['shelfId'] ?><?= calc_bcd_cd($shelf['shelfId']) ?>
     </h1>
 </section>
