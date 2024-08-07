@@ -29,7 +29,7 @@ require_once __DIR__ . '/../internal/login_info.php';
             <?php endif; ?>
             <br />
             <form action="/search/jump.php" method="get">
-                <input type="text" name="code" />
+                <input type="text" name="code" <?= (isset($focus_jump)) ? 'autofocus': '' ?> />
                 <input type="submit" value="Jump" />
             </form>
         </header>
