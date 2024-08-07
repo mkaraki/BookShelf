@@ -20,7 +20,7 @@ if ($shelfId === null) {
     die("No such book");
 }
 
-DB::delete('bookCollection', ['uniqueBookId', $bookId]);
+DB::delete('bookCollection', ['uniqueBookId' => $bookId]);
 
 http_response_code(303);
 header('Location: ../list/shelf.php?id=' . $shelfId);
