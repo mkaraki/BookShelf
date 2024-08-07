@@ -17,7 +17,7 @@ require_once __DIR__ . '/../partial/page-head.php';
             halfSample: true
         },
         decoder: {
-            readers: ["ean_reader"]
+            readers: ["ean_reader", "code_128_reader"]
         },
         locate: true,
     }, function(err) {
