@@ -12,6 +12,12 @@ if (strlen($code) < 4) {
     die("Invalid Code");
 }
 
+if (str_starts_with($code, '978') && strlen($code) == 13) {
+    http_response_code(301);
+    header('Location: isbn.php?isbn=' . $code);
+    exit;
+}
+
 $code_type = substr($code, 0, 2);
 $code_content = substr($code, 2, strlen($code) - 3);
 $bcd = calc_bcd_cd($code_content);
