@@ -36,13 +36,16 @@ require_once __DIR__ . '/../partial/page-head.php';
             {
                 return;
             }
-
-            if (cl === 13 && (cv.startsWith('978') || cv.startsWith('979'))) {
+            else if (cl === 13 && (cv.startsWith('978') || cv.startsWith('979'))) {
                 // ISBN-13
                 location.href = 'isbn.php?isbn=' + cv;
             } else if (cl >= 4 && cv.startsWith('0')) {
                 // BookShelf Code
                 location.href = 'jump.php?code=' + cv;
+            }
+            else
+            {
+                return;
             }
             Quagga.stop();
         });
