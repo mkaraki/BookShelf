@@ -2,6 +2,7 @@
 <?php
 
 $page_title = 'Search ISBN - Book Shelf';
+$focus_jump = true;
 require __DIR__ . '/../partial/page-head.php';
 ?>
 
