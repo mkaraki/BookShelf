@@ -32,7 +32,10 @@ if (!$room)
     Cases:
     <ul>
         <?php foreach (get_cases($_GET['id']) as $v) : ?>
-            <li><a href="case.php?id=<?= $v['caseId'] ?>"><?= htmlentities($v['caseName']) ?></a></li>
+            <li>
+                <a href="case.php?id=<?= $v['caseId'] ?>"><?= htmlentities($v['caseName']) ?></a>
+                (<code>02<?= $v['caseId'] ?><?= calc_bcd_cd($v['caseId']) ?></code>)
+            </li>
         <?php endforeach; ?>
     </ul>
 </section>

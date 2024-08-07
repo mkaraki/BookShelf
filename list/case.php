@@ -12,7 +12,13 @@ if (!$case)
 ?>
 
 <section>
-    <h1>Case: <?= htmlentities($case['caseName']) ?></h1>
+    <h1>
+        Case: <?= htmlentities($case['caseName']) ?>
+        <small>
+            (<code>02<?= $case['caseId'] ?><?= calc_bcd_cd($case['caseId']) ?></code>)
+        </small>
+    </h1>
+
 </section>
 
 <section>
