@@ -33,7 +33,7 @@ if (!$case)
     <ul>
         <?php foreach (get_shelfs($_GET['id']) as $v) : ?>
             <li>
-                <a href="shelf.php?id=<?= $v['shelfId'] ?>"><?= $v['shelfNumber'] ?>: 01<?= $v['shelfId'] ?><?= calc_bcd_cd($v['shelfId']) ?></a>
+                <a href="shelf.php?id=<?= $v['shelfId'] ?>"><?= $v['shelfNumber'] ?>: <code>01<?= $v['shelfId'] ?><?= calc_bcd_cd($v['shelfId']) ?></code></a>
                 <ul>
                     <?php foreach (get_books($v['shelfId']) as $vb) : ?>
                         <li><?= htmlentities($vb['bookName']) ?></li>
