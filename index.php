@@ -29,7 +29,7 @@
                                         <div>
                                             <?php foreach ($case['shelfs'] as $shelf) : ?>
                                                 <span>
-                                                    <a href="list/shelf.php?id=<?= $shelf['shelfId'] ?>">Case <?= htmlentities($shelf['shelfNumber']) ?></a>
+                                                    <a href="list/shelf.php?id=<?= $shelf['shelfId'] ?>">Shelf <?= htmlentities($shelf['shelfNumber']) ?></a>
 
                                                     (<code>01<?= $shelf['shelfId'] ?><?= calc_bcd_cd($shelf['shelfId']) ?></code>,
                                                     <?= count($shelf['books']) ?> books available)
