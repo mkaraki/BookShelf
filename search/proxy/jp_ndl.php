@@ -36,7 +36,7 @@ foreach($xml->records as $recordHost)
 
     try
     {
-        $title = (string) $rdf->xpath('.//dc:title/rdf:Description/rdf:value')[0];
+        $title = (string) $rdf->xpath('.//dcterms:title')[0];
         $bookinfo['title'] = $title;
     }
     catch(Exception $e) {}
@@ -45,6 +45,13 @@ foreach($xml->records as $recordHost)
     {
         $titleRead = (string) $rdf->xpath('.//dc:title/rdf:Description/dcndl:transcription')[0];
         $bookinfo['titleRead'] = $titleRead;
+
+        try
+        {
+            $titleRead = (string) $rdf->xpath('.//dcndl:volume/rdf:Description/dcndl:transcription')[0];
+            $bookinfo['titleRead'] .= ' ' . $titleRead;
+        }
+        catch(Exception $e) {}
     }
     catch(Exception $e) {}
 
