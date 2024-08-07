@@ -12,7 +12,7 @@ if (strlen($code) < 4) {
     die("Invalid Code");
 }
 
-if (str_starts_with($code, '978') && strlen($code) == 13) {
+if (strlen($code) == 13 && (str_starts_with($code, '978') || str_starts_with($code, '979'))) {
     http_response_code(301);
     header('Location: isbn.php?isbn=' . $code);
     exit;
@@ -33,7 +33,6 @@ switch ($code_type) {
         // Book. ToDo.
         http_response_code(400);
         die('Book code is not supported yet.');
-        break;
 
     case '01':
         http_response_code(301);
@@ -54,7 +53,6 @@ switch ($code_type) {
         // User. ToDo.
         http_response_code(400);
         die('User code is not supported yet.');
-        break;
 
     default:
         http_response_code(400);

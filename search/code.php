@@ -32,17 +32,17 @@ require_once __DIR__ . '/../partial/page-head.php';
             const cl = r.codeResult.code.length;
             const cv = r.codeResult.code;
 
-            if (cl == 13 && cv.startsWith('192')) // Japan Book JAN Code (should ignored)
+            if (cl === 13 && cv.startsWith('192')) // Japan Book JAN Code (should ignored)
             {
                 return;
             }
 
-            if (cl == 13 && cv.startsWith('97')) {
+            if (cl === 13 && (cv.startsWith('978') || cv.startsWith('979'))) {
                 // ISBN-13
-                location.href = 'isbn.php?isbn=' + r.codeResult.code;
-            } else if (cl > 3 && cv.startsWith('0')) {
+                location.href = 'isbn.php?isbn=' + cv;
+            } else if (cl >= 4 && cv.startsWith('0')) {
                 // BookShelf Code
-                //location.href = 'shelf.php?code=' + r.codeResult.code;
+                location.href = 'jump.php?code=' + cv;
             }
             Quagga.stop();
         });
