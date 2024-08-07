@@ -14,6 +14,9 @@ require_once __DIR__ . '/../internal/login_info.php';
         header {
             border-bottom: 1px solid black;
         }
+        .table-action-field>form {
+            display: inline-block;
+        }
     </style>
 </head>
 

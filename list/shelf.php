@@ -66,7 +66,17 @@ $case = get_case($shelf['parentCase']);
                             <?= htmlentities($author['authorName']) ?>;
                         <?php endforeach; ?>
                     </td>
-                    <td>
+                    <td class="table-action-field">
+                        <?php if ($login_is) : ?>
+                            <form action="../bookmgr/remove_book.php" method="post">
+                                <input type="hidden" name="id" value="<?= $v['uniqueBookId'] ?>" />
+                                <input type="submit" value="Remove" />
+                            </form>
+                            <form action="../bookmgr/remove_book.php" method="post">
+                                <input type="hidden" name="id" value="<?= $v['uniqueBookId'] ?>" />
+                                <input type="submit" value="Remove" />
+                            </form>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
