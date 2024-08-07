@@ -25,7 +25,12 @@ require_once __DIR__ . '/../internal/login_info.php';
         <header>
             Hello <?= $login_name ?>.
             <?php if (!$login_is) : ?>
-                <a href="dash.php">Login</a>
+                <a href="/dash.php">Login</a>
             <?php endif; ?>
+            <br />
+            <form action="/search/jump.php" method="get">
+                <input type="text" name="code" />
+                <input type="submit" value="Jump" />
+            </form>
         </header>
     <?php endif; ?>
