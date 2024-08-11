@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/internal/lib_util.php';
-require __DIR__ . '/internal/login_info.php';
+require __DIR__ . '/internal/auth.php';
 $focus_jump = true;
 require __DIR__ . '/partial/page-head.php';
 ?>
