@@ -100,7 +100,9 @@ function putSearchedData(name, nameRead, isbn = '') {
 
 function searchIsbnNDL(isbn) {
     const url = `/search/proxy/jp_ndl.php?isbn=${isbn}`;
-    fetch(url)
+    fetch(url, {
+        credentials: "include"
+    })
         .then(response => response.json())
         .then(data => {
             if (data.length < 1) {

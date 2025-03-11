@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../../internal/auth.php';
+
 $isbn = $_GET['isbn'] ?? '';
 
 if (!preg_match('/^[0-9]{13}$/', $isbn)) {
