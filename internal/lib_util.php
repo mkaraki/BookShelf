@@ -31,19 +31,28 @@ function get_site($siteId)
     return DB::queryFirstRow('SELECT * FROM siteInfo WHERE siteId = %d', $siteId);
 }
 
+function get_bookStoreTreeWithRoom($roomId)
+{
+    $room = get_room($roomId);
+
+    $room['cases'] = get_cases($room['roomId']);
+    for($j = 0; $j < count($room['cases']); $j++) {
+        $room['cases'][$j]['shelfs'] = get_shelfs($room['cases'][$j]['caseId']);
+        for($k = 0; $k < count($room['cases'][$j]['shelfs']); $k++) {
+            $room['cases'][$j]['shelfs'][$k]['books'] = get_books($room['cases'][$j]['shelfs'][$k]['shelfId']);
+        }
+    }
+
+    return $room;
+}
+
 function get_bookStoreTreeWithSite($siteId)
 {
     $site = get_site($siteId);
 
     $site['rooms'] = get_rooms($site['siteId']);
     for($j = 0; $j < count($site['rooms']); $j++) {
-        $site['rooms'][$j]['cases'] = get_cases($site['rooms'][$j]['roomId']);
-        for($k = 0; $k < count($site['rooms'][$j]['cases']); $k++) {
-            $site['rooms'][$j]['cases'][$k]['shelfs'] = get_shelfs($site['rooms'][$j]['cases'][$k]['caseId']);
-            for($l = 0; $l < count($site['rooms'][$j]['cases'][$k]['shelfs']); $l++) {
-                $site['rooms'][$j]['cases'][$k]['shelfs'][$l]['books'] = get_books($site['rooms'][$j]['cases'][$k]['shelfs'][$l]['shelfId']);
-            }
-        }
+        $site['rooms'][$j] = get_bookStoreTreeWithRoom($site['rooms'][$j]['roomId']);
     }
 
     return $site;

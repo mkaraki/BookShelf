@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../internal/login_info.php';
+global $login_name, $login_is, $page_title, $focus_jump, $page_no_menu;
 ?>
 <!DOCTYPE html>
 <html lang="en">

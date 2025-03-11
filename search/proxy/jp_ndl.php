@@ -11,6 +11,11 @@ $url = "https://ndlsearch.ndl.go.jp/api/sru?operation=searchRetrieve&version=1.2
 $api_res = file_get_contents($url);
 
 $xml = simplexml_load_string($api_res);
+if ($xml === false) {
+    http_response_code(500);
+    die("Invalid response from NDL server. XML parse error.");
+}
+
 $ns = $xml->getNamespaces(true);
 
 $recordNum = $xml->numberOfRecords;

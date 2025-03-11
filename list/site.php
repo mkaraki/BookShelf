@@ -1,8 +1,10 @@
 <?php
 require __DIR__ . '/../internal/lib_util.php';
 require __DIR__ . '/../internal/login_info.php';
+global $login_is;
 $focus_jump = true;
 require __DIR__ . '/../partial/page-head.php';
+require_once __DIR__ . '/../partial/shelf-list.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id']))
     die('No site id specified');
@@ -32,28 +34,7 @@ if (!$site)
 <section>
     <h2>Rooms:</h2>
     <ul>
-        <?php foreach (get_bookStoreTreeWithSite($_GET['id'])['rooms'] as $room) : ?>
-            <li>
-                <a href="room.php?id=<?= $room['roomId'] ?>"><?= htmlentities($room['roomName']) ?></a>
-                <ul>
-                    <?php foreach ($room['cases'] as $case) : ?>
-                        <li>
-                            <a href="case.php?id=<?= $case['caseId'] ?>"><?= htmlentities($case['caseName']) ?></a>
-                            <div>
-                                <?php foreach ($case['shelfs'] as $shelf) : ?>
-                                    <span>
-                                        <a href="shelf.php?id=<?= $shelf['shelfId'] ?>">Shelf <?= htmlentities($shelf['shelfNumber']) ?></a>
-
-                                        (<code>01<?= $shelf['shelfId'] ?><?= calc_bcd_cd($shelf['shelfId']) ?></code>,
-                                        <?= count($shelf['books']) ?> books available)
-                                    </span>,
-                                <?php endforeach; ?>
-                            </div>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </li>
-        <?php endforeach; ?>
+        <?php foreach (get_bookStoreTreeWithSite($_GET['id'])['rooms'] as $room) { htmlRoom($room); } ?>
     </ul>
 </section>
 

@@ -19,3 +19,5 @@ if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
         $login_type = $user['userType'];
     }
 }
+
+global $login_id, $login_name, $login_is, $login_type;

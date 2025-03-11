@@ -1,5 +1,10 @@
 {
     "require": {
-        "sergeytsalkov/meekrodb": "^3.0"
+        "sergeytsalkov/meekrodb": "^3.0",
+        "ext-json": "*",
+        "ext-simplexml": "*"
+    },
+    "require-dev": {
+        "vimeo/psalm": "^6.8"
     }
 }

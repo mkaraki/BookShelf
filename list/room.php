@@ -1,8 +1,10 @@
 <?php
 require __DIR__ . '/../internal/lib_util.php';
 require __DIR__ . '/../internal/login_info.php';
+global $login_is;
 $focus_jump = true;
 require __DIR__ . '/../partial/page-head.php';
+require __DIR__ . '/../partial/shelf-list.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id']))
     die('No id specified');
@@ -32,12 +34,7 @@ if (!$room)
 <section>
     Cases:
     <ul>
-        <?php foreach (get_cases($_GET['id']) as $v) : ?>
-            <li>
-                <a href="case.php?id=<?= $v['caseId'] ?>"><?= htmlentities($v['caseName']) ?></a>
-                (<code>02<?= $v['caseId'] ?><?= calc_bcd_cd($v['caseId']) ?></code>)
-            </li>
-        <?php endforeach; ?>
+        <?php foreach (get_bookStoreTreeWithRoom(intval($_GET['id']))['cases'] as $v) { htmlCase($v); } ?>
     </ul>
 </section>
 
