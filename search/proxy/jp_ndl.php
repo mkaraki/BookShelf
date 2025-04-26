@@ -23,7 +23,7 @@ $ns = $xml->getNamespaces(true);
 $recordNum = $xml->numberOfRecords;
 if ($recordNum == 0) {
     http_response_code(404);
-    die("Records not found");
+    die("[]");
 }
 
 $toret = [];

@@ -1,3 +1,5 @@
+const isbnSearchState = document.getElementById('isbn-search-state');
+
 function addAuthorNum(preDefinedAuthor = '', preDefinedAuthorId = null) {
     const authorNum = parseInt(document.getElementById('authorNum').value);
     const newAuthorNum = authorNum + 1;
@@ -107,6 +109,7 @@ function searchIsbnNDL(isbn) {
         .then(data => {
             if (data.length < 1) {
                 alert('No data');
+                isbnSearchState.innerText = `No data: ${isbn}`;
                 return;
             }
 
@@ -115,6 +118,9 @@ function searchIsbnNDL(isbn) {
             const titleRead = d.titleRead;
             const publisher = d.publisher;
             postSearch(title, titleRead, [], publisher, isbn);
+        })
+        .catch(() => {
+            isbnSearchState.innerText = `Error: ${isbn}`;
         });
 }
 
@@ -125,6 +131,7 @@ function searchIsbnGoogleBooks(isbn) {
         .then(data => {
             if (data.items.length < 1) {
                 alert('No data');
+                isbnSearchState.innerText = `No data: ${isbn}`;
                 return;
             }
 
@@ -132,6 +139,9 @@ function searchIsbnGoogleBooks(isbn) {
             const title = d.title;
             const authors = d.authors;
             postSearch(title, '', authors, '', isbn);
+        })
+        .catch(() => {
+            isbnSearchState.innerText = `Error: ${isbn}`;
         });
 }
 
@@ -145,6 +155,7 @@ function postSearch(title, titleRead, authors, publisher, isbn) {
     }
 
     console.log(f);
+    isbnSearchState.innerText = `Checking metadata: ${isbn}`;
 
     fetch('isbn_post.php', {
         method: 'POST',
@@ -171,12 +182,16 @@ function postSearch(title, titleRead, authors, publisher, isbn) {
                 }
 
             putSearchedData(title, titleRead, isbn);
+            isbnSearchState.innerText = '';
         });
 }
 
 function searchIsbn() {
-    searchIsbnNDL(document.getElementById('sisbn').value);
-    //searchIsbnGoogleBooks(document.getElementById('sisbn').value);
+    const searchIsbn = document.getElementById('sisbn').value;
+    isbnSearchState.innerText = `Searching: ${searchIsbn}`;
+
+    searchIsbnNDL(searchIsbn);
+    //searchIsbnGoogleBooks(searchIsbn);
 
     document.getElementById('sisbn').value = '';
 }

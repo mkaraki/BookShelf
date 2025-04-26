@@ -30,6 +30,7 @@ $page_title = 'Add book - Book Shelf';
             <input type="text" id="sisbn" class="form-control form-control-sm">
         </div>
         <button type="submit" onclick="searchIsbn();" class="btn btn-primary">Search</button>
+        <div id="isbn-search-state"></div>
     </form>
 </section>
 
