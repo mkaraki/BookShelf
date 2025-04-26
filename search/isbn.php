@@ -20,6 +20,7 @@ require __DIR__ . '/../partial/page-head.php';
     </form>
 
     <?php if (isset($_GET['isbn']) && is_numeric($_GET['isbn']) && strlen($_GET['isbn']) === 13) : ?>
+        <p>Query: isbn=<?= htmlentities($_GET['isbn']) ?></p>
         <table class="table">
             <thead>
                 <tr>
