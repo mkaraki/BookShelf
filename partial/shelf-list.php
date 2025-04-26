@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../internal/lib_util.php';
+require_once __DIR__ . '/../internal/lib_util.php';
 
 function htmlShelf($shelf) { ?>
     <span>
