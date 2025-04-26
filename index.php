@@ -1,9 +1,9 @@
 <?php
-require __DIR__ . '/internal/lib_util.php';
-require __DIR__ . '/internal/login_info.php';
+require_once __DIR__ . '/internal/lib_util.php';
+require_once __DIR__ . '/internal/login_info.php';
 $focus_jump = true;
-require __DIR__ . '/partial/page-head.php';
-require __DIR__ . '/partial/shelf-list.php';
+require_once __DIR__ . '/partial/page-head.php';
+require_once __DIR__ . '/partial/shelf-list.php';
 ?>
 
 <h1>BookShelf</h1>

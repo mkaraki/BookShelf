@@ -1,9 +1,9 @@
-<?php require __DIR__ . '/../internal/lib_util.php'; ?>
-<?php require __DIR__ . '/../internal/auth.php'; ?>
+<?php require_once __DIR__ . '/../internal/lib_util.php'; ?>
+<?php require_once __DIR__ . '/../internal/auth.php'; ?>
 <?php
 $page_title = 'Add book - Book Shelf';
 ?>
-<?php require __DIR__ . '/../partial/page-head.php'; ?>
+<?php require_once __DIR__ . '/../partial/page-head.php'; ?>
 
 <style>
     .err {
