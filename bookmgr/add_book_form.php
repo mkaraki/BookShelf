@@ -15,9 +15,23 @@ $page_title = 'Add book - Book Shelf';
     }
 </style>
 
-<?php if (isset($_GET['added']) && $_GET['added'] === '1') : ?>
+<?php if (isset($_GET['added']) && $_GET['added'] === '1') :
+    if (!empty($_GET['addedid']) && is_numeric($_GET['addedid']))
+    {
+        $added_book_info = get_book($_GET['addedid']);
+        $added_title = $added_book_info['bookName'] ?? 'No name';
+        $added_isbn = $added_book_info['isbn'] ?? 'No ISBN';
+    }
+    else
+    {
+        http_response_code(500);
+        die('Program error.');
+    }
+    ?>
+    ?>
     <div class="alert alert-success" role="alert">
-        Book added. <a href="../list/shelf.php?id=<?= $_GET['id'] ?>" class="alert-link">See entry</a>
+        Book added. <a href="../list/shelf.php?id=<?= $_GET['id'] ?>" class="alert-link">See entry</a><br />
+        Book name: <?= htmlentities($added_title) ?><br />; ISBN: <?= htmlentities($added_isbn) ?>;
     </div>
 <?php endif; ?>
 

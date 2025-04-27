@@ -93,6 +93,11 @@ function get_books($shelfId)
     return DB::query('SELECT * FROM bookCollection WHERE belongShelf = %d', $shelfId);
 }
 
+function get_book($bookId)
+{
+    return DB::queryFirstRow('SELECT * FROM bookCollection WHERE uniqueBookId = %d', $bookId);
+}
+
 function get_publisher($publisherId)
 {
     return DB::queryFirstRow('SELECT * FROM publisherInfo WHERE publisherId = %d', $publisherId);
