@@ -31,7 +31,7 @@ $page_title = 'Add book - Book Shelf';
     ?>
     <div class="alert alert-success" role="alert">
         Book added. <a href="../list/shelf.php?id=<?= $_GET['id'] ?>" class="alert-link">See entry</a><br />
-        Book name: <?= htmlentities($added_title) ?><br />; ISBN: <?= htmlentities($added_isbn) ?>;
+        Book name: <?= htmlentities($added_title) ?>; ISBN: <?= htmlentities($added_isbn) ?>;
     </div>
 <?php endif; ?>
 
