@@ -132,6 +132,20 @@ function search_book_isbn($isbn)
     );
 }
 
+function search_book_title(string $title)
+{
+    return DB::query(
+        'SELECT b.uniqueBookId, b.bookName, b.bookRead, b.isbn, b.bookDisambiguation, sl.shelfNumber, c.caseName, r.roomName, s.siteName
+        FROM bookCollection b, shelfInfo sl, caseInfo c, roomInfo r, siteInfo s
+        WHERE bookName LIKE %ss AND
+        b.belongShelf = sl.shelfId AND
+        sl.parentCase = c.caseId AND
+        c.parentRoom = r.roomId AND
+        r.parentSite = s.siteId',
+        $title
+    );
+}
+
 function calc_bcd_cd($code)
 {
     $code = str_split(strval($code));
