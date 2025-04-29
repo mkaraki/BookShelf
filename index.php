@@ -12,6 +12,7 @@ require_once __DIR__ . '/partial/shelf-list.php';
     Menu:
     <ul>
         <li><a href="search/isbn.php">ISBN Search</a></li>
+        <li><a href="search/title.php">Book Title Search</a></li>
     </ul>
 </section>
 
