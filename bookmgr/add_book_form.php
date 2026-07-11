@@ -28,7 +28,6 @@ $page_title = 'Add book - Book Shelf';
         die('Program error.');
     }
     ?>
-    ?>
     <div class="alert alert-success" role="alert">
         Book added. <a href="../list/shelf.php?id=<?= htmlentities($_GET['id']) ?>" class="alert-link">See entry</a><br />
         Book name: <?= htmlentities($added_title) ?>; ISBN: <?= htmlentities($added_isbn) ?>;
