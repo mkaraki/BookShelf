@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Collection #{{ ob.id | escape }}{% endblock %}
+
+{% block body %}
+    <h1>Edit Collection #{{ ob.id | escape }}: "{{ ob.book.name | escape }}"</h1>
+    {{ form(form) }}
+{% endblock %}

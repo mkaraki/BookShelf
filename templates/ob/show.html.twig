@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Collection #{{ ob.id | escape }}{% endblock %}
+
+{% block body %}
+    <h1>Collection #{{ ob.id }}: {{ ob.book.name | escape }}</h1>
+    <a href="{{ path('ob_index') }}" class="btn btn-secondary mb-3">Back to List</a>
+    <hr />
+
+    <dl>
+        <dt>ID</dt>
+        <dd>{{ ob.id | escape }}</dd>
+
+        <dt>Book ID</dt>
+        <dd>{{ ob.book.id | escape }}</dd>
+
+        <dt>Book Name</dt>
+        <dd>{{ ob.book.name | escape }}</dd>
+
+        <dt>ISBN</dt>
+        <dd>{{ ob.book.isbn | escape }}</dd>
+
+        {% if ob.book.disambiguation %}
+            <dt>Book Disambiguation</dt>
+            <dd>{{ ob.book.disambiguation | escape }}</dd>
+        {% endif %}
+
+        {% if ob.book.bookRead %}
+            <dt>Book Read</dt>
+            <dd>{{ ob.book.bookRead | escape }}</dd>
+        {% endif %}
+
+        <dt>Location</dt>
+        <dd>
+            {{ ob.parentShelf.parentBookCase.parentRoom.parentSite.name | escape }} /
+            {{ ob.parentShelf.parentBookCase.parentRoom.name | escape }} /
+            {{ ob.parentShelf.parentBookCase.name | escape }} /
+            {{ ob.parentShelf.shelfNumber | escape }}
+        </dd>
+    </dl>
+{% endblock %}

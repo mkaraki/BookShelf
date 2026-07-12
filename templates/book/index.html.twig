@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Books{% endblock %}
+
+{% block body %}
+    <h1>Books</h1>
+    <a href="{{ path('book_new') }}" class="btn btn-primary mb-3">Create new</a>
+    <hr />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>ISBN</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <th scope="row">{{ book.id | escape }}</th>
+                <td>
+                    <a href="{{ path('book_show', {'id': book.id}) }}">
+                        {{ book.name | escape }}
+                    </a>
+                    {% if book.disambiguation %}({{ book.disambiguation | escape }}){% endif %}
+                    <br />
+                    <small>{{ book.bookRead | escape }}</small>
+                </td>
+                <td>
+                    {{ book.isbn | escape }}
+                </td>
+                <td class="action-td">
+                    <form action="{{ path('book_edit', {'id': book.id}) }}" method="get" style="display:inline;">
+                        <button class="btn btn-sm btn-secondary">Edit</button>
+                    </form>
+                    <form action="{{ path('book_delete', {'id': book.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this book?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ book.id) }}">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ books | length }} book(s) found.
+{% endblock %}
