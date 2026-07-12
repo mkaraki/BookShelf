@@ -1,0 +1,22 @@
+name: create-redistrubutable.yaml
+on:
+    push: {}
+    workflow_dispatch: {}
+
+permissions:
+    contents: read
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7
+            - uses: php-actions/composer@v6
+              with:
+                  command: composer install --no-dev --optimize-autoloader
+              env:
+                  APP_ENV: prod
+            - uses: actions/upload-artifact@v7
+              with:
+                  path: .
+                  include-hidden-files: true
