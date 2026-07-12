@@ -47,7 +47,7 @@ Code types:
 ### Manual
 
 1. Create a database and configure `.env` file
-1. Run `composer install`
+1. Run `APP_ENV=prod composer install --no-dev --optimize-autoloader`
 1. Run `php bin/console doctrine:migrations:migrate`
 1. (If you need) Run `php bin/console app:import-bookshelf-v1 export.json` to import data from BookShelf v1
 1. Run `php bin/console app:create-admin-user` to create an admin user
