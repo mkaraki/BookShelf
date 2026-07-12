@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Collections{% endblock %}
+
+{% block body %}
+    <h1>Collections</h1>
+    <a href="{{ path('ob_new') }}" class="btn btn-primary mb-3">Create new</a>
+    <hr />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>ISBN</th>
+                <th>Library</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ob in obs %}
+            <tr>
+                <th scope="row">{{ ob.id | escape }}</th>
+                <td>
+                    <a href="{{ path('ob_show', {'id': ob.id}) }}">
+                        {{ ob.book.name | escape }}
+                    </a>
+                    {% if ob.book.disambiguation %}({{ ob.book.disambiguation | escape }}){% endif %}
+                    <br />
+                    <small>{{ ob.book.bookRead | escape }}</small>
+                </td>
+                <td>
+                    {{ ob.book.isbn | escape }}
+                </td>
+                <td>
+                    {{ ob.parentShelf.parentBookCase.parentRoom.parentSite.name | escape }} /
+                    {{ ob.parentShelf.parentBookCase.parentRoom.name | escape }} /
+                    {{ ob.parentShelf.parentBookCase.name | escape }} /
+                    {{ ob.parentShelf.shelfNumber | escape }}
+                </td>
+                <td class="action-td">
+                    <form action="{{ path('ob_edit', {'id': ob.id}) }}" method="get" style="display:inline;">
+                        <button class="btn btn-sm btn-secondary">Edit</button>
+                    </form>
+                    <form action="{{ path('ob_delete', {'id': ob.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this collected book?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ob.id) }}">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ obs | length }} collection(s) found.
+{% endblock %}

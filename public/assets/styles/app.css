@@ -1,0 +1,24 @@
+label {
+    display: block;
+    margin-top: 0.5em;
+}
+
+input[type="text"],
+input[type="number"],
+textarea{
+    width: calc(100% - 15px);
+    margin-bottom: 0.5em;
+}
+
+table.table,
+table.table tr {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table.table td,
+table.table th {
+    padding: 0.25em 0.5em;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
