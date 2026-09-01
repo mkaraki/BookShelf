@@ -38,7 +38,7 @@
                 <td>{{ shelf.id | escape }}</td>
                 <td>
                     <a href="{{ path('shelf_show', { 'site_id': site.id, 'room_id': room.id, 'case_id': case.id, 'shelf_id': shelf.id }) }}">
-                        {{ shelf.shelfNumber | escape }}
+                        No. {{ shelf.shelfNumber | escape }}
                     </a>
                 </td>
                 <td>
@@ -51,6 +51,34 @@
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ shelf.id) }}">
                         <button class="btn btn-sm btn-danger">Delete</button>
                     </form>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <table class="table">
+                        <tbody>
+                            {% if shelf.ownedBooks | length > 0 %}
+                                {% for ownedBook in shelf.ownedBooks %}
+                                    <tr>
+                                        <td>{{ ownedBook.id | escape }}</td>
+                                        <td>
+                                            <a href="{{ path('book_show', { 'id': ownedBook.book.id }) }}">
+                                                {{ ownedBook.book.name | escape }}
+                                            </a>
+                                            <small>
+                                                (BID: {{ ownedBook.book.id | escape }}
+                                                {% if ownedBook.book.isbn %}, ISBN: {{ ownedBook.book.isbn | escape }}{% endif %})
+                                            </small>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="3">No books found on this shelf.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
                 </td>
             </tr>
         {% endfor %}
