@@ -33,7 +33,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Book Code</th>
+                <th>Shelf Code</th>
                 <th>Shelf</th>
                 <th>Actions</th>
             </tr>
@@ -41,7 +42,8 @@
         <tbody>
             {% for ob in book.ownedBooks %}
             <tr>
-                <td>{{ ob.id | escape }}</td>
+                <td>{{ ob.code | escape }}</td>
+                <td>{{ ob.parentShelf.code | escape }}</td>
                 <td>
                     <a href="{{ path('shelf_show', {
                         'site_id': ob.parentShelf.parentBookCase.parentRoom.parentSite.id,
