@@ -1,7 +1,10 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Book;
+use App\Entity\Site;
 use App\Utils\InternalCodeUtil;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,9 +13,15 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomePageController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(Request $request): Response
+    public function index(EntityManagerInterface $entityManager, Request $request): Response
     {
-        return $this->render('index.html.twig');
+        $sites = $entityManager->getRepository(Site::class)->findAll();
+        $recentBooks = $entityManager->getRepository(Book::class)->findRecentlyAdded();
+
+        return $this->render('index.html.twig', [
+            'sites' => $sites,
+            'recentBooks' => $recentBooks,
+        ]);
     }
 
     public static function calc_bcd_cd(string $code): string {

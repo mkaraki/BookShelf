@@ -10,24 +10,67 @@
 
 {% block body %}
     <h1>BookShelf</h1>
+    <hr />
 
-    <form method="get" action="{{ path('book_index') }}">
-        <label for="search-book">Search Book by Name:</label>
-        <input type="text" name="q" id="search-book" placeholder="Search by title or ISBN" />
-        <button type="submit">Search</button>
-    </form>
+    <section>
+        <h2>Search</h2>
 
-    <form method="get" action="{{ path('book_index') }}" id="search-book-isbn-form">
-        <label for="search-book-isbn">Search Book by ISBN:</label>
-        <input type="text" name="isbn" id="search-book-isbn" placeholder="Search by ISBN" />
-        <button type="submit">Search</button>
-        <button onclick="callCodeReaderForBookSearchScreen()" type="button">Scan Barcode</button>
-    </form>
+        <form method="get" action="{{ path('book_index') }}">
+            <label for="search-book">Search Book by Name:</label>
+            <input type="text" name="q" id="search-book" placeholder="Search by title or ISBN" />
+            <button type="submit">Search</button>
+        </form>
 
-    <form method="get" action="{{ path('home_code_jump') }}" id="jump-to-code-form">
-        <label for="jump-to-code">Jump to Code:</label>
-        <input type="text" name="code" id="jump-to-code" placeholder="Jump to BookShelf code" />
-        <button type="submit">Search</button>
-        <button onclick="callCodeReaderForCodeJumpScreen()" type="button">Scan Barcode</button>
-    </form>
+        <form method="get" action="{{ path('book_index') }}" id="search-book-isbn-form">
+            <label for="search-book-isbn">Search Book by ISBN:</label>
+            <input type="text" name="isbn" id="search-book-isbn" placeholder="Search by ISBN" />
+            <button type="submit">Search</button>
+            <button onclick="callCodeReaderForBookSearchScreen()" type="button">Scan Barcode</button>
+        </form>
+
+        <form method="get" action="{{ path('home_code_jump') }}" id="jump-to-code-form">
+            <label for="jump-to-code">Jump to Code:</label>
+            <input type="text" name="code" id="jump-to-code" placeholder="Jump to BookShelf code" />
+            <button type="submit">Search</button>
+            <button onclick="callCodeReaderForCodeJumpScreen()" type="button">Scan Barcode</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Sites</h2>
+        <ul>
+            {% for site in sites %}
+                <li>
+                    <a href="{{ path('site_show', {'id': site.id}) }}">
+                        {{ site.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section>
+        <h2>Recently Added Books</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in recentBooks %}
+                    <tr>
+                        <td>{{ book.id }}</td>
+                        <td>
+                            <a href="{{ path('book_show', {'id': book.id}) }}">
+                                {{ book.name }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
 {% endblock %}
