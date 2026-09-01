@@ -34,7 +34,7 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Site Name</th>
+                <th>Shelf</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -43,10 +43,20 @@
             <tr>
                 <td>{{ ob.id | escape }}</td>
                 <td>
-                    {{ ob.parentShelf.parentBookCase.parentRoom.parentSite.name | escape }} /
-                    {{ ob.parentShelf.parentBookCase.parentRoom.name | escape }} /
-                    {{ ob.parentShelf.parentBookCase.name | escape }} /
-                    {{ ob.parentShelf.shelfNumber | escape }}
+                    <a href="{{ path('shelf_show', {
+                        'site_id': ob.parentShelf.parentBookCase.parentRoom.parentSite.id,
+                        'room_id': ob.parentShelf.parentBookCase.parentRoom.id,
+                        'case_id': ob.parentShelf.parentBookCase.id,
+                        'shelf_id': ob.parentShelf.id
+                    }) }}">
+                        {{ ob.parentShelf.parentBookCase.parentRoom.parentSite.name | escape }}
+                        /
+                        {{ ob.parentShelf.parentBookCase.parentRoom.name | escape }}
+                        /
+                        {{ ob.parentShelf.parentBookCase.name | escape }}
+                        /
+                        {{ ob.parentShelf.shelfNumber | escape }}
+                    </a>
                 </td>
                 <td class="action-td">
                     <form action="{{ path('ob_edit', {'id': ob.id}) }}" method="get" style="display:inline;">
