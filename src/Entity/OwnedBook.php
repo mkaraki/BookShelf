@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\OwnedBookRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use App\Utils\InternalCodeUtil;
+
 #[ORM\Entity(repositoryClass: OwnedBookRepository::class)]
 class OwnedBook
 {
@@ -48,5 +50,10 @@ class OwnedBook
         $this->book = $book;
 
         return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return InternalCodeUtil::generateCode(InternalCodeUtil::CODE_TYPE_OWNED_BOOK, $this->id);
     }
 }

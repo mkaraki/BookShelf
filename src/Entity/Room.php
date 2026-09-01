@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\RoomRepository;
+use App\Utils\InternalCodeUtil;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -105,5 +106,10 @@ class Room
         }
 
         return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return InternalCodeUtil::generateCode(InternalCodeUtil::CODE_TYPE_ROOM, $this->id);
     }
 }

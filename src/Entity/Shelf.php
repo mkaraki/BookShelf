@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ShelfRepository;
+use App\Utils\InternalCodeUtil;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -90,5 +91,10 @@ class Shelf
         }
 
         return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return InternalCodeUtil::generateCode(InternalCodeUtil::CODE_TYPE_SHELF, $this->id);
     }
 }

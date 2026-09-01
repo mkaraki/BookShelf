@@ -9,6 +9,9 @@
     <hr />
 
     <dl>
+        <dt>Code</dt>
+        <dd>{{ case.code | escape }}</dd>
+
         <dt>ID</dt>
         <dd>{{ case.id | escape }}</dd>
 
@@ -27,7 +30,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Code</th>
                 <th>Shelf No.</th>
                 <th>Actions</th>
             </tr>
@@ -35,7 +38,7 @@
         <tbody>
         {% for shelf in case.shelves|sort((a, b) => a.shelfNumber <=> b.shelfNumber) %}
             <tr>
-                <td>{{ shelf.id | escape }}</td>
+                <td>{{ shelf.code | escape }}</td>
                 <td>
                     <a href="{{ path('shelf_show', { 'site_id': site.id, 'room_id': room.id, 'case_id': case.id, 'shelf_id': shelf.id }) }}">
                         No. {{ shelf.shelfNumber | escape }}
@@ -60,7 +63,7 @@
                             {% if shelf.ownedBooks | length > 0 %}
                                 {% for ownedBook in shelf.ownedBooks %}
                                     <tr>
-                                        <td>{{ ownedBook.id | escape }}</td>
+                                        <td>{{ ownedBook.code | escape }}</td>
                                         <td>
                                             <a href="{{ path('book_show', { 'id': ownedBook.book.id }) }}">
                                                 {{ ownedBook.book.name | escape }}
