@@ -33,7 +33,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for shelf in case.shelves %}
+        {% for shelf in case.shelves|sort((a, b) => a.shelfNumber <=> b.shelfNumber) %}
             <tr>
                 <td>{{ shelf.id | escape }}</td>
                 <td>
