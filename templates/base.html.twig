@@ -21,5 +21,15 @@
     </head>
     <body>
         {% block body %}{% endblock %}
+        <footer class="footer-global">
+            <hr />
+            <div>
+                <a href="{{ path('site_index') }}">Home</a> |
+                <a href="{{ path('book_index') }}">Books</a>
+            </div>
+            <small>
+                BookShelf Management System
+            </small>
+        </footer>
     </body>
 </html>
