@@ -66,4 +66,23 @@ class BookRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    /**
+     * @return Book[] Returns an array of Book objects
+     */
+    public function findRecentlyAdded($max = 15, $mustOwned = true): array
+    {
+        $query = $this->createQueryBuilder('b')
+            ->orderBy('b.id', 'DESC')
+            ->setMaxResults($max);
+
+        if ($mustOwned) {
+            // Check if bookId in ownedBooks.book field
+            $query->leftJoin('b.ownedBooks', 'ownedBooks')
+                ->andWhere('ownedBooks.id IS NOT NULL');
+        }
+
+        return $query->getQuery()
+            ->getResult();
+    }
 }
