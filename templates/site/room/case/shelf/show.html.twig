@@ -10,6 +10,9 @@
     <hr />
 
     <dl>
+        <dt>Code</dt>
+        <dd>{{ shelf.code | escape }}</dd>
+
         <dt>ID</dt>
         <dd>{{ shelf.id | escape }}</dd>
 
@@ -31,7 +34,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Code</th>
                 <th>Book ID</th>
                 <th>Book Title</th>
                 <th>ISBN</th>
@@ -41,7 +44,7 @@
         <tbody>
         {% for ob in shelf.ownedBooks %}
             <tr>
-                <td>{{ ob.id | escape }}</td>
+                <td>{{ ob.code | escape }}</td>
                 <td>{{ ob.book.id }}</td>
                 <td>
                     <a href="{{ path('book_show', {'id': ob.book.id}) }}">

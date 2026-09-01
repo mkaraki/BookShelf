@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Utils\InternalCodeUtil;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,18 +16,8 @@ class HomePageController extends AbstractController
     }
 
     public static function calc_bcd_cd(string $code): string {
-        $code = str_split(strval($code));
-        $sum = 0;
-        foreach ($code as $c) {
-            if (!is_numeric($c))
-                return false;
-
-            $c = intval($c);
-            $sum += $c;
-            $sum = $sum % 10;
-        }
-
-        return strval($sum % 10);
+        // For compatibility
+        return strval(InternalCodeUtil::calculateBcdCd($code));
     }
 
     #[Route('/jump', name: 'home_code_jump', methods: 'GET')]

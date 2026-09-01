@@ -20,7 +20,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Code</th>
                 <th>Room name</th>
                 <th>Actions</th>
             </tr>
@@ -28,7 +28,7 @@
         <tbody>
         {% for room in site.rooms %}
             <tr>
-                <td>{{ room.id | escape }}</td>
+                <td>{{ room.code | escape }}</td>
                 <td>
                     <a href="{{ path('room_show', {'site_id': site.id, 'room_id': room.id}) }}">
                         {{ room.name | escape }}

@@ -8,6 +8,9 @@
     <hr />
 
     <dl>
+        <dt>Code</dt>
+        <dd>{{ room.code | escape }}</dd>
+
         <dt>ID</dt>
         <dd>{{ room.id | escape }}</dd>
 
@@ -23,7 +26,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Code</th>
                 <th>Case name</th>
                 <th>Actions</th>
             </tr>
@@ -31,7 +34,7 @@
         <tbody>
         {% for bookCase in room.bookCases %}
             <tr>
-                <td>{{ bookCase.id | escape }}</td>
+                <td>{{ bookCase.code | escape }}</td>
                 <td>
                     <a href="{{ path('book_case_show', { 'site_id': site.id, 'room_id': room.id, 'case_id': bookCase.id}) }}">
                         {{ bookCase.name | escape }}
