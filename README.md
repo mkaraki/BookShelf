@@ -51,3 +51,8 @@ Code types:
 1. Run `php bin/console doctrine:migrations:migrate`
 1. (If you need) Run `php bin/console app:import-bookshelf-v1 export.json` to import data from BookShelf v1
 1. Run `php bin/console app:create-admin-user` to create an admin user
+
+## Start server for development
+
+1. Run `.\db.debug.ps1` to start MariaDB server on Docker
+2. Run `symfony serve`
