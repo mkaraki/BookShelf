@@ -13,12 +13,16 @@ graph LR
     BookCase -- has few --> BookShelf
     BookShelf -- Part of --> BookCase
 
-    Book -- in --> BookShelf
-
     Author -- write --> Book
     Book -- written by several --> Author
 
     Publisher -- publish --> Book
+
+    Book -- has few --> OwnedBook
+    OwnedBook -- is copy of --> Book
+
+    OwnedBook -- in --> BookShelf
+    BookShelf -- has few --> OwnedBook
 ```
 
 ## Barcode structure
@@ -32,7 +36,7 @@ graph LR
 - `d `: sum % 10 of `n+`
 
 Code types:
-- `00`: Book Collection Id
+- `00`: Book Collection Id (Owned Book Id)
 - `01`: Book Shelf Id
 - `02`: Book Case Id
 - `03`: Room Id
@@ -42,9 +46,13 @@ Code types:
 
 ### Manual
 
-1. Copy all php files in root directory.
-2. Copy all directories except `lib` and `dbinit`.
-3. Rename `_config.php.example` to `_config.php`.
-4. Edit `_config.php`.
-5. Download `db.class.php` from [MeekroDB GitHub](https://github.com/SergeyTsalkov/meekrodb) and place under `lib/meekrodb/`.
-6. Execute all sql script in `dbinit`.
+1. Create a database and configure `.env` file
+1. Run `APP_ENV=prod composer install --no-dev --optimize-autoloader`
+1. Run `php bin/console doctrine:migrations:migrate`
+1. (If you need) Run `php bin/console app:import-bookshelf-v1 export.json` to import data from BookShelf v1
+1. Run `php bin/console app:create-admin-user` to create an admin user
+
+## Start server for development
+
+1. Run `.\db.debug.ps1` to start MariaDB server on Docker
+2. Run `symfony serve`
