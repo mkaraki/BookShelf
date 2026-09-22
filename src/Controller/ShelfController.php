@@ -118,9 +118,8 @@ class ShelfController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $case = $form->getData();
+            $shelf = $form->getData();
 
-            $entityManager->persist($case);
             $entityManager->flush();
 
             return $this->redirectToRoute('book_case_show', [
