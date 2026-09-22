@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "symfony-ux": {
+      "source": "smnandre/symfony-ux-skills",
+      "sourceType": "github",
+      "skillPath": "skills/symfony-ux/SKILL.md",
+      "computedHash": "e83ff63e2aa70164b90d8809744b2f726f1f905673d4b97b693382b51694a243"
+    },
+    "twig-component": {
+      "source": "smnandre/symfony-ux-skills",
+      "sourceType": "github",
+      "skillPath": "skills/twig-component/SKILL.md",
+      "computedHash": "9fbcd5f1623339f798aa4c772fcd776fddbcda0624b55c3f369a48f56362a88a"
+    }
+  }
+}
