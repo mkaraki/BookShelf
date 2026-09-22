@@ -80,8 +80,7 @@ class SiteController extends AbstractController
 
         return $this->render('site/edit.html.twig', [
             'form' => $form,
-            'site_name' => $site->getName(),
-            'site_id' => $site->getId(),
+            'site' => $site,
         ]);
     }
 

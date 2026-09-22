@@ -56,3 +56,43 @@ Code types:
 
 1. Run `.\db.debug.ps1` to start MariaDB server on Docker
 2. Run `symfony serve`
+
+## Testing
+
+### Test database
+
+Tests run against `app_test` (Doctrine appends the `_test` suffix to the `app`
+dbname in the `test` environment). Create it before the first run:
+
+```bash
+php bin/console doctrine:database:create --env=test
+php bin/console doctrine:migrations:migrate --env=test
+```
+
+### E2E suite
+
+The E2E tests live in `tests/E2E/` and extend `AbstractPantherTestCase`. They
+drive the full HTTP stack (CSRF-protected forms, sessions, real `app_test`
+database) via Panther's HttpBrowser client — matching the app's no-JS design
+(AGENTS.md). Each test reseeds the database, so tests are isolated and
+re-runnable.
+
+Run the whole suite:
+
+```bash
+php bin/phpunit
+```
+
+Run one test file:
+
+```bash
+php bin/phpunit --filter SomeTest
+```
+
+Notes:
+
+- Every feature must ship with a passing E2E test covering the happy path and
+  key no-JS interactions.
+- The real-browser (Firefox, `PANTHER_E2E_DRIVER=firefox`) mode is wired but is
+  not usable on this machine (macOS sandbox blocks geckodriver); the HttpBrowser
+  client is the default.

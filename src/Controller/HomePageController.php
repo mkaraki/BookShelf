@@ -24,11 +24,6 @@ class HomePageController extends AbstractController
         ]);
     }
 
-    public static function calc_bcd_cd(string $code): string {
-        // For compatibility
-        return strval(InternalCodeUtil::calculateBcdCd($code));
-    }
-
     #[Route('/jump', name: 'home_code_jump', methods: 'GET')]
     public function codeJump(Request $request): Response
     {
@@ -51,10 +46,9 @@ class HomePageController extends AbstractController
 
         $code_type = substr($code, 0, 2);
         $code_content = substr($code, 2, strlen($code) - 3);
-        $bcd = HomePageController::calc_bcd_cd($code_content);
-        $bcd_expect = substr($bcd, strlen($bcd) - 2, 1);
+        $checksum = substr($code, -1);
 
-        if ($bcd != $bcd_expect) {
+        if (strval(InternalCodeUtil::calculateBcdCd($code_content)) !== $checksum) {
             throw $this->createNotFoundException(sprintf('Broken code: %s', $code));
         }
 
