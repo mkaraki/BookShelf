@@ -16,7 +16,7 @@ jobs:
 
       - name: Run DB
         run: |
-          sudo docker run --rm \
+          sudo docker run --rm -d \
             -e MYSQL_ROOT_PASSWORD=password \
             -e MYSQL_DATABASE=bookshelf \
             -e MYSQL_USER=app \
