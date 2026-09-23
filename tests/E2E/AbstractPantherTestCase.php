@@ -42,7 +42,9 @@ abstract class AbstractPantherTestCase extends PantherTestCase
     protected function setUp(): void
     {
         if (getenv('PANTHER_E2E_DRIVER') === 'firefox') {
-            $this->client = self::createPantherClient();
+            $this->client = static::createPantherClient(['browser' => static::FIREFOX]);
+        } else if (getenv('PANTHER_E2E_DRIVER') === 'chrome') {
+            $this->client = static::createPantherClient(['browser' => static::CHROME]);
         } else {
             $this->client = self::createHttpBrowserClient();
             $this->restartWebServerIfDown();
