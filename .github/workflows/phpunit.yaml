@@ -27,4 +27,4 @@ jobs:
           sleep 60
 
       - name: Run test suite
-        run: bin/phpunit
+        run: php bin/phpunit
