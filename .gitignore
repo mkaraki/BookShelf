@@ -16,3 +16,6 @@
 /_debugtmp
 
 /export.json
+
+# Web Drivers
+/drivers
