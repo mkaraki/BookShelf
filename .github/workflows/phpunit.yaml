@@ -18,7 +18,7 @@ jobs:
         run: |
           sudo docker run --rm -d \
             -e MYSQL_ROOT_PASSWORD=password \
-            -e MYSQL_DATABASE=bookshelf \
+            -e MYSQL_DATABASE=bookshelf_test \
             -e MYSQL_USER=app \
             -e "MYSQL_PASSWORD=!ChangeMe!" \
             -p 3306:3306 \
