@@ -26,5 +26,8 @@ jobs:
 
           sleep 60
 
+      - name: DB migration
+        run: php bin/console doctrine:migrations:migrate --env=test
+
       - name: Run test suite
         run: php bin/phpunit
