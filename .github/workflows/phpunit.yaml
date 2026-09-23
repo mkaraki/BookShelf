@@ -22,7 +22,7 @@ jobs:
             -e MYSQL_USER=app \
             -e "MYSQL_PASSWORD=!ChangeMe!" \
             -p 3306:3306 \
-            "mariadb:10.11"
+            "ghcr.io/mariadb/mariadb:10.11"
 
           sleep 60
 
