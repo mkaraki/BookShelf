@@ -26,7 +26,9 @@
             </tr>
         </thead>
         <tbody>
-        {% for room in site.rooms %}
+        {% set visibleRooms = site.rooms|filter(r => not r.isHidden(app.user)) %}
+        {% set hiddenRooms = site.rooms|length - visibleRooms|length %}
+        {% for room in visibleRooms %}
             <tr>
                 <td>{{ room.code | escape }}</td>
                 <td>
@@ -45,7 +47,13 @@
                 </td>
             </tr>
         {% endfor %}
+        {% if hiddenRooms > 0 %}
+            <tr class="private-hidden">
+                <td colspan="3">Some rooms are private and hidden from anonymous visitors.</td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
-    {{ site.rooms | length }} room(s) found.
+    {{ visibleRooms | length }} room(s) found.
+    {% if hiddenRooms > 0 %}{{ hiddenRooms }} private room(s) hidden.{% endif %}
 {% endblock %}

@@ -71,6 +71,10 @@ class BookController extends AbstractController
     #[Route('/book/{id}/', name: 'book_show')]
     public function show(EntityManagerInterface $entityManager, Request $request, Book $book): Response
     {
+        if ($book->isHidden($this->getUser())) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->render('book/show.html.twig', [
             'book' => $book,
         ]);

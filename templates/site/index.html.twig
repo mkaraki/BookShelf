@@ -16,7 +16,9 @@
             </tr>
         </thead>
         <tbody>
-        {% for site in sites %}
+        {% set visibleSites = sites|filter(s => not s.isHidden(app.user)) %}
+        {% set hiddenSites = sites|length - visibleSites|length %}
+        {% for site in visibleSites %}
             <tr>
                 <th scope="row">{{ site.id | escape }}</th>
                 <td>
@@ -35,7 +37,13 @@
                 </td>
             </tr>
         {% endfor %}
+        {% if hiddenSites > 0 %}
+            <tr class="private-hidden">
+                <td colspan="3">Some sites are private and hidden from anonymous visitors.</td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
-    {{ sites | length }} site(s) found.
+    {{ visibleSites | length }} site(s) found.
+    {% if hiddenSites > 0 %}{{ hiddenSites }} private site(s) hidden.{% endif %}
 {% endblock %}

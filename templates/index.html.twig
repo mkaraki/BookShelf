@@ -38,8 +38,9 @@
 
     <section>
         <h2>Sites</h2>
+        {% set visibleSites = sites|filter(s => not s.isHidden(app.user)) %}
         <ul>
-            {% for site in sites %}
+            {% for site in visibleSites %}
                 <li>
                     <a href="{{ path('site_show', {'id': site.id}) }}">
                         {{ site.name }}
@@ -47,6 +48,8 @@
                 </li>
             {% endfor %}
         </ul>
+        {{ visibleSites|length }} site(s) found.
+        {% if sites|length - visibleSites|length > 0 %}{{ sites|length - visibleSites|length }} private site(s) hidden.{% endif %}
     </section>
 
     <section>
@@ -58,8 +61,9 @@
                     <th>Name</th>
                 </tr>
             </thead>
+            {% set visibleRecentBooks = recentBooks|filter(b => not b.isHidden(app.user)) %}
             <tbody>
-                {% for book in recentBooks %}
+                {% for book in visibleRecentBooks %}
                     <tr>
                         <td>{{ book.id }}</td>
                         <td>
@@ -69,8 +73,15 @@
                         </td>
                     </tr>
                 {% endfor %}
+                {% if recentBooks|length - visibleRecentBooks|length > 0 %}
+                    <tr class="private-hidden">
+                        <td colspan="2">Some books are private and hidden from anonymous visitors.</td>
+                    </tr>
+                {% endif %}
             </tbody>
         </table>
+        {{ visibleRecentBooks|length }} book(s) found.
+        {% if recentBooks|length - visibleRecentBooks|length > 0 %}{{ recentBooks|length - visibleRecentBooks|length }} private book(s) hidden.{% endif %}
     </section>
 
 {% endblock %}

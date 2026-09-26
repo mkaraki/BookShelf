@@ -4,12 +4,15 @@ namespace App\Entity;
 
 use App\Repository\OwnedBookRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 use App\Utils\InternalCodeUtil;
 
 #[ORM\Entity(repositoryClass: OwnedBookRepository::class)]
 class OwnedBook
 {
+    use PrivateTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -55,5 +58,14 @@ class OwnedBook
     public function getCode(): ?string
     {
         return InternalCodeUtil::generateCode(InternalCodeUtil::CODE_TYPE_OWNED_BOOK, $this->id);
+    }
+
+    public function isHidden(?UserInterface $user): bool
+    {
+        return null === $user && (
+            $this->private
+            || ($this->book?->isHidden($user) ?? false)
+            || ($this->parentShelf?->isHidden($user) ?? false)
+        );
     }
 }

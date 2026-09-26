@@ -32,7 +32,9 @@
             </tr>
         </thead>
         <tbody>
-        {% for bookCase in room.bookCases %}
+        {% set visibleCases = room.bookCases|filter(c => not c.isHidden(app.user)) %}
+        {% set hiddenCases = room.bookCases|length - visibleCases|length %}
+        {% for bookCase in visibleCases %}
             <tr>
                 <td>{{ bookCase.code | escape }}</td>
                 <td>
@@ -52,7 +54,13 @@
                 </td>
             </tr>
         {% endfor %}
+        {% if hiddenCases > 0 %}
+            <tr class="private-hidden">
+                <td colspan="3">Some cases are private and hidden from anonymous visitors.</td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
-    {{ room.bookCases | length }} case(s) found.
+    {{ visibleCases | length }} case(s) found.
+    {% if hiddenCases > 0 %}{{ hiddenCases }} private case(s) hidden.{% endif %}
 {% endblock %}

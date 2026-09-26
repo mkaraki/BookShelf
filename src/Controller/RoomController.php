@@ -63,6 +63,10 @@ class RoomController extends AbstractController
         Room $room
     ): Response
     {
+        if ($room->getParentSite() !== $site || $room->isHidden($this->getUser())) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->render('site/room/show.html.twig', [
             'site' => $site,
             'room' => $room,
