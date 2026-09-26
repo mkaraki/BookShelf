@@ -9,9 +9,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class HomePageController extends AbstractController
 {
+    public function __construct(
+        #[Autowire('%app.version%')]
+        private readonly string $appVersion,
+    ) {
+    }
+
     #[Route('/', name: 'home')]
     public function index(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -82,4 +89,15 @@ class HomePageController extends AbstractController
                 throw $this->createNotFoundException(sprintf('Unknown code: %s', $code));
         }
     }
+
+    #[Route(path: '/sysinfo', name: 'home_sysinfo')]
+    public function sysinfo(): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
+
+        return $this->render('sysinfo.html.twig', [
+            'appVersion' => $this->appVersion,
+        ]);
+    }
+
 }
