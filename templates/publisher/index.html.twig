@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Publishers{% endblock %}
+
+{% block body %}
+    <h1>Publishers</h1>
+    <a href="{{ path('publisher_new') }}">Create new</a>
+    <hr />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for publisher in publishers %}
+            <tr>
+                <th scope="row">{{ publisher.id | escape }}</th>
+                <td>
+                    <a href="{{ path('publisher_show', {'id': publisher.id}) }}">
+                        {{ publisher.name | escape }}
+                    </a>
+                    {% if publisher.disambiguation %}({{ publisher.disambiguation | escape }}){% endif %}
+                    <br />
+                    <small>{{ publisher.publisherRead | escape }}</small>
+                </td>
+                <td class="action-td">
+                    <form action="{{ path('publisher_edit', {'id': publisher.id}) }}" method="get" style="display:inline;">
+                        <button class="btn btn-sm btn-secondary">Edit</button>
+                    </form>
+                    <form action="{{ path('publisher_delete', {'id': publisher.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this publisher?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ publisher.id) }}">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ publishers | length }} publisher(s) found.
+{% endblock %}

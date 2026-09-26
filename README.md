@@ -13,12 +13,16 @@ graph LR
     BookCase -- has few --> BookShelf
     BookShelf -- Part of --> BookCase
 
-    Book -- in --> BookShelf
-
     Author -- write --> Book
     Book -- written by several --> Author
 
     Publisher -- publish --> Book
+
+    Book -- has few --> OwnedBook
+    OwnedBook -- is copy of --> Book
+
+    OwnedBook -- in --> BookShelf
+    BookShelf -- has few --> OwnedBook
 ```
 
 ## Barcode structure
@@ -32,7 +36,7 @@ graph LR
 - `d `: sum % 10 of `n+`
 
 Code types:
-- `00`: Book Collection Id
+- `00`: Book Collection Id (Owned Book Id)
 - `01`: Book Shelf Id
 - `02`: Book Case Id
 - `03`: Room Id
@@ -42,9 +46,53 @@ Code types:
 
 ### Manual
 
-1. Copy all php files in root directory.
-2. Copy all directories except `lib` and `dbinit`.
-3. Rename `_config.php.example` to `_config.php`.
-4. Edit `_config.php`.
-5. Download `db.class.php` from [MeekroDB GitHub](https://github.com/SergeyTsalkov/meekrodb) and place under `lib/meekrodb/`.
-6. Execute all sql script in `dbinit`.
+1. Create a database and configure `.env` file
+1. Run `APP_ENV=prod composer install --no-dev --optimize-autoloader`
+1. Run `php bin/console doctrine:migrations:migrate`
+1. (If you need) Run `php bin/console app:import-bookshelf-v1 export.json` to import data from BookShelf v1
+1. Run `php bin/console app:create-admin-user` to create an admin user
+
+## Start server for development
+
+1. Run `.\db.debug.ps1` to start MariaDB server on Docker
+2. Run `symfony serve`
+
+## Testing
+
+### Test database
+
+Tests run against `app_test` (Doctrine appends the `_test` suffix to the `app`
+dbname in the `test` environment). Create it before the first run:
+
+```bash
+php bin/console doctrine:database:create --env=test
+php bin/console doctrine:migrations:migrate --env=test
+```
+
+### E2E suite
+
+The E2E tests live in `tests/E2E/` and extend `AbstractPantherTestCase`. They
+drive the full HTTP stack (CSRF-protected forms, sessions, real `app_test`
+database) via Panther's HttpBrowser client — matching the app's no-JS design
+(AGENTS.md). Each test reseeds the database, so tests are isolated and
+re-runnable.
+
+Run the whole suite:
+
+```bash
+php bin/phpunit
+```
+
+Run one test file:
+
+```bash
+php bin/phpunit --filter SomeTest
+```
+
+Notes:
+
+- Every feature must ship with a passing E2E test covering the happy path and
+  key no-JS interactions.
+- The real-browser (Firefox, `PANTHER_E2E_DRIVER=firefox`) mode is wired but is
+  not usable on this machine (macOS sandbox blocks geckodriver); the HttpBrowser
+  client is the default.

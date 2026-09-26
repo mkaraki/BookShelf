@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Room: {{ room.name | escape }}{% endblock %}
+
+{% block body %}
+    <h1>Room: {{ room.name | escape }}</h1>
+    <a href="{{ path('site_show', {'id': site.id}) }}" class="btn btn-secondary mb-3">Back to Site</a>
+    <hr />
+
+    <dl>
+        <dt>Code</dt>
+        <dd>{{ room.code | escape }}</dd>
+
+        <dt>ID</dt>
+        <dd>{{ room.id | escape }}</dd>
+
+        <dt>Name</dt>
+        <dd>{{ room.name | escape }}</dd>
+
+        <dt>Site</dt>
+        <dd>{{ site.name | escape }}</dd>
+    </dl>
+
+    <h2>Cases</h2>
+    <a href="{{ path('book_case_new', {'site_id': site.id, 'room_id': room.id}) }}" class="btn btn-primary mb-3">Add New Case</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Case name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for bookCase in room.bookCases %}
+            <tr>
+                <td>{{ bookCase.code | escape }}</td>
+                <td>
+                    <a href="{{ path('book_case_show', { 'site_id': site.id, 'room_id': room.id, 'case_id': bookCase.id}) }}">
+                        {{ bookCase.name | escape }}
+                    </a>
+                </td>
+                <td>
+                    <form action="{{ path('book_case_edit', {'site_id': site.id, 'room_id': room.id, 'case_id': bookCase.id}) }}" method="get" style="display:inline;">
+                        <button class="btn btn-sm btn-secondary">Edit</button>
+                    </form>
+                    <form action="{{ path('book_case_delete', {'site_id': site.id, 'room_id': room.id, 'case_id': bookCase.id}) }}"
+                          method="post" onsubmit="return confirm('Are you sure you want to delete this case?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ bookCase.id) }}">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ room.bookCases | length }} case(s) found.
+{% endblock %}
