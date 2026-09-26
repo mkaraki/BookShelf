@@ -12,7 +12,7 @@
         "doctrine/orm": "^3.7.1",
         "phpdocumentor/reflection-docblock": "^6.0.3",
         "phpstan/phpdoc-parser": "^2.3.5",
-        "sentry/sentry-symfony": "^5.13",
+        "sentry/sentry-symfony": "*",
         "symfony/apache-pack": ">=1.0.1",
         "symfony/console": "8.1.*",
         "symfony/doctrine-messenger": "8.1.*",

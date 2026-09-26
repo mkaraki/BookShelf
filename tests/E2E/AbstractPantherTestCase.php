@@ -49,6 +49,12 @@ abstract class AbstractPantherTestCase extends PantherTestCase
             $this->client = self::createHttpBrowserClient();
             $this->restartWebServerIfDown();
         }
+
+        // The Panther browser (and the shared HttpBrowser) is a static singleton
+        // that keeps its cookies across every test in the run, so a login from
+        // an earlier test would leak into tests that expect an anonymous session.
+        $this->client->getCookieJar()->clear();
+
         $this->em = self::getContainer()->get(EntityManagerInterface::class);
         $this->seedDatabase();
     }
@@ -127,7 +133,11 @@ abstract class AbstractPantherTestCase extends PantherTestCase
 
     protected function assertOnPath(string $path): void
     {
-        $current = (string) $this->client->getInternalRequest()->getUri();
+        if ($this->client instanceof PantherClient) {
+            $current = $this->client->getCurrentURL();
+        } else {
+            $current = (string) $this->client->getInternalRequest()->getUri();
+        }
         $this->assertStringContainsString($path, $current);
     }
 
