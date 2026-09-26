@@ -7,6 +7,10 @@ sentry:
         ignore_exceptions:
             - 'Symfony\Component\ErrorHandler\Error\FatalError'
             - 'Symfony\Component\Debug\Exception\FatalErrorException'
+            - 'Symfony\Component\HttpKernel\Exception\BadRequestHttpException'
+            - 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException'
+            - 'Symfony\Component\Console\Exception\CommandNotFoundException'
+            - 'Symfony\Component\Security\Core\Exception\AccessDeniedException'
         traces_sample_rate: 0.2
         enable_logs: true
         environment: '%kernel.environment%'
