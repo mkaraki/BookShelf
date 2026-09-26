@@ -19,3 +19,7 @@
 
 # Web Drivers
 /drivers
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
