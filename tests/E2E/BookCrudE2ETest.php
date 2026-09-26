@@ -39,6 +39,14 @@ final class BookCrudE2ETest extends AbstractPantherTestCase
         $this->assertPageNotContains('Another Book');
     }
 
+    public function testIndexSearchByDashedIsbn(): void
+    {
+        $this->go('/book/?isbn=978-4-16-710586-0');
+
+        $this->assertPageContains('Example Novel');
+        $this->assertPageNotContains('Another Book');
+    }
+
     public function testIndexSearchByIsbnWithNoMatches(): void
     {
         $this->go('/book/?isbn=9781111111111');
@@ -130,6 +138,25 @@ final class BookCrudE2ETest extends AbstractPantherTestCase
 
         $this->assertOnPath('/book/new');
         $this->assertPageContains('This value is not valid ISBN-13 code.');
+    }
+
+    public function testCreateBookWithDashedIsbnStoresDigits(): void
+    {
+        $this->loginAsAdmin();
+
+        $this->go('/book/new');
+        $this->client->submitForm('Save', [
+            'book[name]' => 'Dashed ISBN Book',
+            'book[isbn]' => '978-4-16-710586-0',
+        ]);
+
+        $this->assertOnPath('/book/');
+        $this->assertPageContains('Dashed ISBN Book');
+
+        $this->go('/book/');
+        $this->client->clickLink('Dashed ISBN Book');
+        $this->assertPageContains('9784167105860');
+        $this->assertPageNotContains('978-4-16-710586-0');
     }
 
     public function testEditBookChangesNameAndIsbn(): void

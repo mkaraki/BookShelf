@@ -166,6 +166,14 @@ class ImportCommand extends Command
                 if (!is_array($book)) {
                     throw new \RuntimeException('Invalid book entry');
                 }
+                // ISBN may be hyphenated in the export; store digits only.
+                $isbn = $book['isbn'] ?? null;
+                if (is_string($isbn)) {
+                    $isbn = str_replace('-', '', $isbn);
+                    if ($isbn === '') {
+                        $isbn = null;
+                    }
+                }
                 // Process each book
                 $conn->executeStatement('INSERT INTO book (id, name, book_read, disambiguation, isbn, publisher_id)
                                               VALUES (:id, :name, :book_read, :disambiguation, :isbn, :publisher_id)', [
@@ -173,7 +181,7 @@ class ImportCommand extends Command
                     'name' => $book['bookName'],
                     'book_read' => $book['bookRead'],
                     'disambiguation' => $book['bookDisambiguation'],
-                    'isbn' => $book['isbn'],
+                    'isbn' => $isbn,
                     'publisher_id' => $book['publisherId'],
                 ]);
 
