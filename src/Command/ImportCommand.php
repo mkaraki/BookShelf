@@ -192,10 +192,10 @@ class ImportCommand extends Command
                     'book_id' => $book['uniqueBookId'],
                 ]);
 
-                $authorIds = $book['authorIds'] ?? [];
-                if (!is_array($authorIds)) {
+                if (!isset($book['authorIds']) || !is_array($book['authorIds'])) {
                     throw new \RuntimeException('Invalid authorIds entry');
                 }
+                $authorIds = $book['authorIds'];
                 foreach ($authorIds as $authorId) {
                     $conn->executeStatement('INSERT INTO book_author (book_id, author_id)
                                                   VALUES (:book_id, :author_id)', [

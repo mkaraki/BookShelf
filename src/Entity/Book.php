@@ -135,7 +135,13 @@ class Book
     {
         if (is_string($isbn)) {
             $isbn = str_replace('-', '', $isbn);
-            $isbn = $isbn === '' ? null : (int) $isbn;
+            if ($isbn === '') {
+                $isbn = null;
+            } elseif (!ctype_digit($isbn)) {
+                throw new \InvalidArgumentException('Invalid ISBN value: only digits and hyphens are allowed.');
+            } else {
+                $isbn = (int) $isbn;
+            }
         }
 
         $this->isbn = $isbn;
