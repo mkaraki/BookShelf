@@ -5,6 +5,7 @@ use App\Entity\Book;
 use App\Entity\Shelf;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -42,6 +43,10 @@ class OwnedBookType extends AbstractType
 
                     return "$siteName / $roomName / $caseName / $shelfNo";
                 },
+            ])
+            ->add('private', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Private (hidden from anonymous visitors)',
             ])
             ->add('save', SubmitType::class)
         ;

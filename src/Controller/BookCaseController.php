@@ -70,6 +70,10 @@ class BookCaseController extends AbstractController
         BookCase $case,
     ): Response
     {
+        if ($case->isHidden($this->getUser())) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->render('site/room/case/show.html.twig', [
             'site' => $site,
             'room' => $room,

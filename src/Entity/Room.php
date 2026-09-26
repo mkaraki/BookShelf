@@ -7,10 +7,13 @@ use App\Utils\InternalCodeUtil;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: RoomRepository::class)]
 class Room
 {
+    use PrivateTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -111,5 +114,10 @@ class Room
     public function getCode(): ?string
     {
         return InternalCodeUtil::generateCode(InternalCodeUtil::CODE_TYPE_ROOM, $this->id);
+    }
+
+    public function isHidden(?UserInterface $user): bool
+    {
+        return null === $user && ($this->private || ($this->parentSite?->isHidden($user) ?? false));
     }
 }

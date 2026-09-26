@@ -42,7 +42,9 @@
             </tr>
         </thead>
         <tbody>
-        {% for ob in shelf.ownedBooks %}
+        {% set visibleObs = shelf.ownedBooks|filter(ob => not ob.isHidden(app.user)) %}
+        {% set hiddenObs = shelf.ownedBooks|length - visibleObs|length %}
+        {% for ob in visibleObs %}
             <tr>
                 <td>{{ ob.code | escape }}</td>
                 <td>{{ ob.book.id }}</td>
@@ -70,7 +72,13 @@
                 </td>
             </tr>
         {% endfor %}
+        {% if hiddenObs > 0 %}
+            <tr class="private-hidden">
+                <td colspan="5">Some books are private and hidden from anonymous visitors.</td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
-    {{ shelf.ownedBooks | length }} book(s) found.
+    {{ visibleObs | length }} book(s) found.
+    {% if hiddenObs > 0 %}{{ hiddenObs }} private book(s) hidden.{% endif %}
 {% endblock %}

@@ -23,6 +23,11 @@ table.table th {
     border-collapse: collapse;
 }
 
+.private-hidden {
+    text-align: center;
+    font-style: italic;
+}
+
 footer.footer-global {
     text-align: center;
     margin-top: 5rem;

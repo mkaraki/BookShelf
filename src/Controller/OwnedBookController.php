@@ -76,6 +76,10 @@ class OwnedBookController extends AbstractController
     #[Route('/ob/{id}/', name: 'ob_show')]
     public function show(EntityManagerInterface $entityManager, Request $request, OwnedBook $ownedBook): Response
     {
+        if ($ownedBook->isHidden($this->getUser())) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->render('ob/show.html.twig', [
             'ob' => $ownedBook,
         ]);

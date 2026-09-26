@@ -56,6 +56,10 @@ class SiteController extends AbstractController
     #[Route('/site/{id}/', name:'site_show')]
     public function show(EntityManagerInterface $entityManager, Request $request, Site $site): Response
     {
+        if ($site->isHidden($this->getUser())) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->render('site/show.html.twig', [
             'site' => $site,
         ]);

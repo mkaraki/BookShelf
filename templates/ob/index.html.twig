@@ -18,7 +18,9 @@
             </tr>
         </thead>
         <tbody>
-        {% for ob in obs %}
+        {% set visibleObs = obs|filter(ob => not ob.isHidden(app.user)) %}
+        {% set hiddenObs = obs|length - visibleObs|length %}
+        {% for ob in visibleObs %}
             <tr>
                 <th scope="row">{{ ob.id | escape }}</th>
                 <td>
@@ -49,7 +51,13 @@
                 </td>
             </tr>
         {% endfor %}
+        {% if hiddenObs > 0 %}
+            <tr class="private-hidden">
+                <td colspan="5">Some collections are private and hidden from anonymous visitors.</td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
-    {{ obs | length }} collection(s) found.
+    {{ visibleObs | length }} collection(s) found.
+    {% if hiddenObs > 0 %}{{ hiddenObs }} private collection(s) hidden.{% endif %}
 {% endblock %}

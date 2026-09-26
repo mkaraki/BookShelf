@@ -36,7 +36,9 @@
             </tr>
         </thead>
         <tbody>
-        {% for shelf in case.shelves|sort((a, b) => a.shelfNumber <=> b.shelfNumber) %}
+        {% set visibleShelves = case.shelves|filter(s => not s.isHidden(app.user))|sort((a, b) => a.shelfNumber <=> b.shelfNumber) %}
+        {% set hiddenShelves = case.shelves|length - visibleShelves|length %}
+        {% for shelf in visibleShelves %}
             <tr>
                 <td>{{ shelf.code | escape }}</td>
                 <td>
@@ -60,24 +62,29 @@
                 <td colspan="3">
                     <table class="table">
                         <tbody>
-                            {% if shelf.ownedBooks | length > 0 %}
-                                {% for ownedBook in shelf.ownedBooks %}
-                                    <tr>
-                                        <td>{{ ownedBook.code | escape }}</td>
-                                        <td>
-                                            <a href="{{ path('book_show', { 'id': ownedBook.book.id }) }}">
-                                                {{ ownedBook.book.name | escape }}
-                                            </a>
-                                            <small>
-                                                (BID: {{ ownedBook.book.id | escape }}
-                                                {% if ownedBook.book.isbn %}, ISBN: {{ ownedBook.book.isbn | escape }}{% endif %})
-                                            </small>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            {% else %}
+                            {% set visibleOwnedBooks = shelf.ownedBooks|filter(ob => not ob.isHidden(app.user)) %}
+                            {% set hiddenOwnedBooks = shelf.ownedBooks|length - visibleOwnedBooks|length %}
+                            {% for ownedBook in visibleOwnedBooks %}
                                 <tr>
-                                    <td colspan="3">No books found on this shelf.</td>
+                                    <td>{{ ownedBook.code | escape }}</td>
+                                    <td>
+                                        <a href="{{ path('book_show', { 'id': ownedBook.book.id }) }}">
+                                            {{ ownedBook.book.name | escape }}
+                                        </a>
+                                        <small>
+                                            (BID: {{ ownedBook.book.id | escape }}
+                                            {% if ownedBook.book.isbn %}, ISBN: {{ ownedBook.book.isbn | escape }}{% endif %})
+                                        </small>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            {% if hiddenOwnedBooks > 0 %}
+                                <tr>
+                                    <td colspan="2">{{ hiddenOwnedBooks }} private book(s) hidden on this shelf.</td>
+                                </tr>
+                            {% elseif visibleOwnedBooks | length == 0 %}
+                                <tr>
+                                    <td colspan="2">No books found on this shelf.</td>
                                 </tr>
                             {% endif %}
                         </tbody>
@@ -85,7 +92,13 @@
                 </td>
             </tr>
         {% endfor %}
+        {% if hiddenShelves > 0 %}
+            <tr class="private-hidden">
+                <td colspan="3">Some shelves are private and hidden from anonymous visitors.</td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
-    {{ case.shelves | length }} shelf(s) found.
+    {{ visibleShelves | length }} shelf(s) found.
+    {% if hiddenShelves > 0 %}{{ hiddenShelves }} private shelf(s) hidden.{% endif %}
 {% endblock %}
