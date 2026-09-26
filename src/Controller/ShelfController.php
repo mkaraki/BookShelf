@@ -77,6 +77,10 @@ class ShelfController extends AbstractController
         Shelf $shelf,
     ): Response
     {
+        if ($shelf->isHidden($this->getUser())) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->render('site/room/case/shelf/show.html.twig', [
             'site' => $site,
             'room' => $room,
