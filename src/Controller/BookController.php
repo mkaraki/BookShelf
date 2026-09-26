@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Form\Type\BookType;
+use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DomCrawler\Field\TextareaFormField;
@@ -18,25 +19,26 @@ use Symfony\Component\Routing\Attribute\Route;
 class BookController extends AbstractController
 {
     #[Route('/book/', name: 'book_index')]
-    public function index(EntityManagerInterface $entityManager, Request $request): Response
+    public function index(BookRepository $bookRepository, Request $request): Response
     {
-        $books = $entityManager->getRepository(Book::class);
-
         $isGet = $request->isMethod('GET');
 
         if ($isGet && $request->query->has('q')) {
             $value = $request->query->get('q');
-            $books = $books->findByLikeNameField($value);
+            if (!is_string($value)) {
+                return $this->json([], status: 400);
+            }
+            $books = $bookRepository->findByLikeNameField($value);
         } else if ($isGet && $request->query->has('isbn')) {
             $value = $request->query->get('isbn');
             // Validate
-            if (!preg_match('/^[0-9]{13}$/', str_replace('-', '', $value))) {
+            if (!is_string($value) || !preg_match('/^[0-9]{13}$/', str_replace('-', '', $value))) {
                 // Handle invalid ISBN
                 return $this->json([], status: 400);
             }
-            $books = $books->findByIsbnField($value);
+            $books = $bookRepository->findByIsbnField($value);
         } else {
-            $books = $books->findAll();
+            $books = $bookRepository->findAll();
         }
 
         return $this->render('book/index.html.twig', [

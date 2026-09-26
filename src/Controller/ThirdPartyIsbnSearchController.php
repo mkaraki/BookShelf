@@ -26,12 +26,12 @@ class ThirdPartyIsbnSearchController extends AbstractController
 
     #[Route('/search/proxy/jp_ndl', name: 'search_jp_ndl', methods: ['GET'])]
     #[Cache(public: true, maxage: 604800, mustRevalidate: false)]
-    public function searchJpNdl(Request $request)
+    public function searchJpNdl(Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
 
         $isbn = $request->query->get('isbn');
-        if (!$isbn) {
+        if (!is_string($isbn) || $isbn === '') {
             return $this->json(['error' => 'ISBN parameter is required'], Response::HTTP_BAD_REQUEST);
         }
 
@@ -51,8 +51,8 @@ class ThirdPartyIsbnSearchController extends AbstractController
 
         $ns = $xml->getNamespaces(true);
 
-        $recordNum = $xml->numberOfRecords;
-        if ($recordNum == 0) {
+        $recordNum = (int) $xml->numberOfRecords;
+        if ($recordNum === 0) {
             return $this->json(['error' => 'No records found'], Response::HTTP_NOT_FOUND);
         }
 

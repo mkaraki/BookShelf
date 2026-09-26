@@ -19,7 +19,7 @@ class BookRepository extends ServiceEntityRepository
     /**
      * @return Book[] Returns an array of Book objects
      */
-    public function findByLikeNameField($value): array
+    public function findByLikeNameField(string $value): array
     {
         return $this->createQueryBuilder('b')
             ->andWhere('b.name LIKE :val')
@@ -32,7 +32,7 @@ class BookRepository extends ServiceEntityRepository
     /**
      * @return Book[] Returns an array of Book objects
      */
-    public function findByIsbnField($value): array
+    public function findByIsbnField(string $value): array
     {
         return $this->createQueryBuilder('b')
             ->andWhere('b.isbn = :val')
@@ -70,7 +70,7 @@ class BookRepository extends ServiceEntityRepository
     /**
      * @return Book[] Returns an array of Book objects
      */
-    public function findRecentlyAdded($max = 15, $mustOwned = true): array
+    public function findRecentlyAdded(int $max = 15, bool $mustOwned = true): array
     {
         $query = $this->createQueryBuilder('b')
             ->orderBy('b.id', 'DESC')
