@@ -63,7 +63,7 @@ class RoomController extends AbstractController
         Room $room
     ): Response
     {
-        if ($room->isHidden($this->getUser())) {
+        if ($room->getParentSite() !== $site || $room->isHidden($this->getUser())) {
             throw $this->createNotFoundException();
         }
 

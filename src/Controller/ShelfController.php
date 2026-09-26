@@ -77,7 +77,12 @@ class ShelfController extends AbstractController
         Shelf $shelf,
     ): Response
     {
-        if ($shelf->isHidden($this->getUser())) {
+        if (
+            $shelf->getParentBookCase() !== $case
+            || $case->getParentRoom() !== $room
+            || $room->getParentSite() !== $site
+            || $shelf->isHidden($this->getUser())
+        ) {
             throw $this->createNotFoundException();
         }
 

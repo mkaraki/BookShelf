@@ -34,6 +34,23 @@ final class RoomCrudE2ETest extends AbstractPantherTestCase
         $this->assertStatusCode(404);
     }
 
+    public function testRoomUnderMismatchedSiteYields404(): void
+    {
+        $this->loginAsAdmin();
+
+        $this->go('/site/2/room/new');
+        $this->client->submitForm('Save', ['room[name]' => 'Annex Room']);
+
+        // Room id 2 lives in site id 2, so the matching chain works...
+        $this->go('/site/2/room/2/');
+        $this->assertStatusCode(200);
+        $this->assertPageContains('Annex Room');
+
+        // ...but it must not be reachable through site id 1.
+        $this->go('/site/1/room/2/');
+        $this->assertStatusCode(404);
+    }
+
     public function testShowRoomDisplaysDetailsAndCaseList(): void
     {
         $this->go('/site/1/room/1/');
