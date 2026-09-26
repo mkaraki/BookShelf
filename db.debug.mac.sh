@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#!/usr/bin/env bash
 # macOS dev database launcher (Apple Container, Docker-compatible CLI).
 # Windows equivalent: db.debug.ps1. Creates the bookshelf DB on first boot
 # via MYSQL_DATABASE.
