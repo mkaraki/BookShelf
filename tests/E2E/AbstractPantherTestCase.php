@@ -12,7 +12,7 @@ use App\Entity\Shelf;
 use App\Entity\Site;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\BrowserKit\AbstractBrowser;
+use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\Panther\Client as PantherClient;
 use Symfony\Component\Panther\PantherTestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -36,7 +36,7 @@ abstract class AbstractPantherTestCase extends PantherTestCase
     public const ADMIN_EMAIL = 'admin@example.com';
     public const ADMIN_PASSWORD = 'admin123';
 
-    protected AbstractBrowser $client;
+    protected PantherClient|HttpBrowser $client;
     protected EntityManagerInterface $em;
 
     protected function setUp(): void
@@ -149,7 +149,6 @@ abstract class AbstractPantherTestCase extends PantherTestCase
     protected function assertJsonBodyContains(string $text): void
     {
         $content = $this->client->getInternalResponse()->getContent();
-        $this->assertIsString($content);
         $this->assertStringContainsString($text, $content);
     }
 

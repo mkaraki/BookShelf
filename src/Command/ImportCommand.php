@@ -2,7 +2,6 @@
 
 namespace App\Command;
 
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -46,10 +45,35 @@ class ImportCommand extends Command
         }
 
         $file = $input->getArgument('file');
+        if (!is_string($file)) {
+            $io->error('Invalid file argument');
+
+            return Command::FAILURE;
+        }
         $content = file_get_contents($file);
+        if ($content === false) {
+            $io->error('Cannot read file');
+
+            return Command::FAILURE;
+        }
         $json_data = json_decode($content, true);
-        if ($json_data === null) {
+        if (!is_array($json_data)) {
             $io->error('Invalid JSON file');
+
+            return Command::FAILURE;
+        }
+
+        $sites = $json_data['sites'] ?? null;
+        $rooms = $json_data['rooms'] ?? null;
+        $cases = $json_data['cases'] ?? null;
+        $shelves = $json_data['shelves'] ?? null;
+        $authors = $json_data['authors'] ?? null;
+        $publishers = $json_data['publishers'] ?? null;
+        $bookCollection = $json_data['bookCollection'] ?? null;
+        if (!is_array($sites) || !is_array($rooms) || !is_array($cases) || !is_array($shelves)
+            || !is_array($authors) || !is_array($publishers) || !is_array($bookCollection)) {
+            $io->error('Invalid JSON structure');
+
             return Command::FAILURE;
         }
 
@@ -59,7 +83,10 @@ class ImportCommand extends Command
         $io->info('Transaction started');
 
         try {
-            foreach ($io->progressIterate($json_data['sites']) as $site) {
+            foreach ($io->progressIterate($sites) as $site) {
+                if (!is_array($site)) {
+                    throw new \RuntimeException('Invalid site entry');
+                }
                 // Process each site
                 $conn->executeStatement('INSERT INTO site (id, name) VALUES (:id, :name)', [
                         'id' => $site['siteId'],
@@ -67,7 +94,10 @@ class ImportCommand extends Command
                     ]);
             }
 
-            foreach ($io->progressIterate($json_data['rooms']) as $room) {
+            foreach ($io->progressIterate($rooms) as $room) {
+                if (!is_array($room)) {
+                    throw new \RuntimeException('Invalid room entry');
+                }
                 // Process each room
                 $conn->executeStatement('INSERT INTO room (id, name, room_floor, parent_site_id)
                                               VALUES (:id, :name, :room_floor, :parent_site_id)', [
@@ -78,7 +108,10 @@ class ImportCommand extends Command
                     ]);
             }
 
-            foreach ($io->progressIterate($json_data['cases']) as $case) {
+            foreach ($io->progressIterate($cases) as $case) {
+                if (!is_array($case)) {
+                    throw new \RuntimeException('Invalid case entry');
+                }
                 // Process each case
                 $conn->executeStatement('INSERT INTO book_case (id, name, parent_room_id)
                                               VALUES (:id, :name, :parent_room_id)', [
@@ -88,7 +121,10 @@ class ImportCommand extends Command
                     ]);
             }
 
-            foreach ($io->progressIterate($json_data['shelves']) as $shelf) {
+            foreach ($io->progressIterate($shelves) as $shelf) {
+                if (!is_array($shelf)) {
+                    throw new \RuntimeException('Invalid shelf entry');
+                }
                 // Process each shelf
                 $conn->executeStatement('INSERT INTO shelf (id, shelf_number, parent_book_case_id)
                                               VALUES (:id, :shelf_number, :parent_book_case_id)', [
@@ -98,7 +134,10 @@ class ImportCommand extends Command
                     ]);
             }
 
-            foreach ($io->progressIterate($json_data['authors']) as $author) {
+            foreach ($io->progressIterate($authors) as $author) {
+                if (!is_array($author)) {
+                    throw new \RuntimeException('Invalid author entry');
+                }
                 // Process each author
                 $conn->executeStatement('INSERT INTO author (id, name, author_read, disambiguation)
                                               VALUES (:id, :name, :author_read, :disambiguation)', [
@@ -109,7 +148,10 @@ class ImportCommand extends Command
                     ]);
             }
 
-            foreach ($io->progressIterate($json_data['publishers']) as $publisher) {
+            foreach ($io->progressIterate($publishers) as $publisher) {
+                if (!is_array($publisher)) {
+                    throw new \RuntimeException('Invalid publisher entry');
+                }
                 // Process each publisher
                 $conn->executeStatement('INSERT INTO publisher (id, name, publisher_read, disambiguation)
                                               VALUES (:id, :name, :publisher_read, :disambiguation)', [
@@ -120,7 +162,10 @@ class ImportCommand extends Command
                 ]);
             }
 
-            foreach ($io->progressIterate($json_data['bookCollection']) as $book) {
+            foreach ($io->progressIterate($bookCollection) as $book) {
+                if (!is_array($book)) {
+                    throw new \RuntimeException('Invalid book entry');
+                }
                 // Process each book
                 $conn->executeStatement('INSERT INTO book (id, name, book_read, disambiguation, isbn, publisher_id)
                                               VALUES (:id, :name, :book_read, :disambiguation, :isbn, :publisher_id)', [
@@ -139,7 +184,11 @@ class ImportCommand extends Command
                     'book_id' => $book['uniqueBookId'],
                 ]);
 
-                foreach ($book['authorIds'] as $authorId) {
+                $authorIds = $book['authorIds'] ?? [];
+                if (!is_array($authorIds)) {
+                    throw new \RuntimeException('Invalid authorIds entry');
+                }
+                foreach ($authorIds as $authorId) {
                     $conn->executeStatement('INSERT INTO book_author (book_id, author_id)
                                                   VALUES (:book_id, :author_id)', [
                         'book_id' => $book['uniqueBookId'],

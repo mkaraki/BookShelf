@@ -1,8 +1,8 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\Book;
 use App\Entity\Site;
+use App\Repository\BookRepository;
 use App\Utils\InternalCodeUtil;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,10 +20,10 @@ class HomePageController extends AbstractController
     }
 
     #[Route('/', name: 'home')]
-    public function index(EntityManagerInterface $entityManager, Request $request): Response
+    public function index(EntityManagerInterface $entityManager, BookRepository $bookRepository, Request $request): Response
     {
         $sites = $entityManager->getRepository(Site::class)->findAll();
-        $recentBooks = $entityManager->getRepository(Book::class)->findRecentlyAdded();
+        $recentBooks = $bookRepository->findRecentlyAdded();
 
         return $this->render('index.html.twig', [
             'sites' => $sites,
