@@ -7,10 +7,13 @@ use App\Utils\InternalCodeUtil;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: BookCaseRepository::class)]
 class BookCase
 {
+    use PrivateTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -96,5 +99,10 @@ class BookCase
     public function getCode(): ?string
     {
         return InternalCodeUtil::generateCode(InternalCodeUtil::CODE_TYPE_BOOK_CASE, $this->id);
+    }
+
+    public function isHidden(?UserInterface $user): bool
+    {
+        return null === $user && ($this->private || ($this->parentRoom?->isHidden($user) ?? false));
     }
 }

@@ -25,6 +25,19 @@ graph LR
     BookShelf -- has few --> OwnedBook
 ```
 
+## Private mode
+
+`Site`, `Room`, `BookCase`, `Shelf`, `Book` and `OwnedBook` have a `private`
+flag, toggled on their edit form. When it is set, the object is hidden from
+anonymous visitors (404 on its page, filtered out of every list) and the whole
+location subtree below it is hidden too. `OwnedBook` is additionally hidden when
+its `Book` or its `Shelf` is private. Authenticated users always see everything.
+
+Lists report both totals below the table (`N book(s) found.` plus
+`N private book(s) hidden.`) and end with a single placeholder row stating that
+private items are being hidden. The hidden total and the placeholder only appear
+for anonymous visitors, since nothing is hidden from a logged-in user.
+
 ## Barcode structure
 
 ```
