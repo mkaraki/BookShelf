@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Book;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use SortDirection;
 
 /**
  * @extends ServiceEntityRepository<Book>
@@ -24,7 +25,7 @@ class BookRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
             ->andWhere('b.name LIKE :val')
             ->setParameter('val', '%' . $value . '%')
-            ->orderBy('b.id', 'ASC')
+            ->orderBy('b.id', SortDirection::Ascending)
             ->getQuery()
             ->getResult();
     }
@@ -37,7 +38,7 @@ class BookRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
             ->andWhere('b.isbn = :val')
             ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
+            ->orderBy('b.id', SortDirection::Ascending)
             ->getQuery()
             ->getResult();
     }
@@ -50,7 +51,7 @@ class BookRepository extends ServiceEntityRepository
     //        return $this->createQueryBuilder('b')
     //            ->andWhere('b.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('b.id', 'ASC')
+    //            ->orderBy('b.id', SortDirection::Ascending)
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
@@ -73,7 +74,7 @@ class BookRepository extends ServiceEntityRepository
     public function findRecentlyAdded(int $max = 15, bool $mustOwned = true): array
     {
         $query = $this->createQueryBuilder('b')
-            ->orderBy('b.id', 'DESC')
+            ->orderBy('b.id', SortDirection::Descending)
             ->setMaxResults($max);
 
         if ($mustOwned) {
