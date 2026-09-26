@@ -47,9 +47,6 @@
                     </a>
                 </li>
             {% endfor %}
-            {% if sites|length - visibleSites|length > 0 %}
-                <li class="private-hidden">{{ sites|length - visibleSites|length }} private site(s) hidden.</li>
-            {% endif %}
         </ul>
         {{ visibleSites|length }} site(s) found.
         {% if sites|length - visibleSites|length > 0 %}{{ sites|length - visibleSites|length }} private site(s) hidden.{% endif %}
