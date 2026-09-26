@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Book{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/assets/scripts/codeReaderCaller.js"></script>
+    <script src="/assets/scripts/bookUtils.js"></script>
+{% endblock %}
+
+{% block body %}
+    <h1>Create new Book</h1>
+    <hr />
+    <div>
+        <input type="text" id="search_isbn" placeholder="Search metadata from ISBN" />
+        <button onclick="searchIsbnAndApplyToBook()">Search</button>
+        <button onclick="callCodeReader()">Scan Barcode</button>
+    </div>
+    <hr />
+    {{ form(form) }}
+{% endblock %}

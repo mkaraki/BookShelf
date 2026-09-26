@@ -1,0 +1,12 @@
+parameters:
+    level: 6
+    paths:
+        - bin/
+        - config/
+        - public/
+        - src/
+        - tests/
+    doctrine:
+        # Entities use nullable PHP properties for required columns so that
+        # `new Entity()` + Symfony validation works before first flush.
+        allowNullablePropertyForRequiredField: true

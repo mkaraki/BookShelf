@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Site #{{ site.id | escape }}{% endblock %}
+
+{% block body %}
+    <h1>Edit Site #{{ site.id | escape }}: "{{ site.name | escape }}"</h1>
+    {{ form(form) }}
+{% endblock %}

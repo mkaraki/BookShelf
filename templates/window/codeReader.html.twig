@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Code Reader{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js" integrity="sha256-JDVyLQRqvRSTL/6WaPud93JXpfEdW11zwjqhoNgkGXc=" crossorigin="anonymous"></script>
+    <script src="/assets/scripts/codeReader.js"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/styles/codeReader.css">
+{% endblock %}
+
+{% block body %}
+    <div id="prv"></div>
+{% endblock %}

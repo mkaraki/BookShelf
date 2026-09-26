@@ -1,0 +1,52 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "packageRules": [
+        {
+            "matchPackageNames": [
+                "actions/*",
+                "docker/*",
+                "sigstore/*",
+                "github/*"
+            ],
+            "matchDatasources": [
+                "github-actions"
+            ],
+            "groupName": "Actions/Docker/SigStore actions"
+        },
+        {
+            "matchPackageNames": [
+                "mkaraki/mkarakiapps-releasing-actions"
+            ],
+            "matchDatasources": [
+                "github-actions"
+            ],
+            "versioning": "semver"
+        },
+        {
+            "matchPackageNames": [
+                "symfony/*",
+                "doctrine/*",
+                "twig/*"
+            ],
+            "matchDatasources": [
+                "packagist"
+            ],
+            "groupName": "Symfony Framework Related"
+        }
+    ],
+    "bumpVersions": [
+        {
+            "name": "Application version",
+            "filePatterns": [
+                "config/services.php"
+            ],
+            "matchStrings": [
+                "const APP_VERSION\\s*=\\s*['\"]v(?<version>\\d+\\.\\d+\\.\\d+)['\"]"
+            ],
+            "bumpType": "patch"
+        }
+    ],
+    "assignees": [
+        "mkaraki"
+    ]
+}

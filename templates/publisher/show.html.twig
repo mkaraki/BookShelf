@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Publisher: {{ publisher.name | escape }}{% endblock %}
+
+{% block body %}
+    <h1>Publisher: {{ publisher.name | escape }}</h1>
+    <a href="{{ path('publisher_index') }}">Back to List</a>
+    <hr />
+
+    <dl>
+        <dt>ID</dt>
+        <dd>{{ publisher.id | escape }}</dd>
+
+        <dt>Name</dt>
+        <dd>{{ publisher.name | escape }}</dd>
+
+        {% if publisher.disambiguation %}
+            <dt>Disambiguation</dt>
+            <dd>{{ publisher.disambiguation | escape }}</dd>
+        {% endif %}
+
+        {% if publisher.publisherRead %}
+            <dt>Publisher Read</dt>
+            <dd>{{ publisher.publisherRead | escape }}</dd>
+        {% endif %}
+    </dl>
+
+    <h2>Books</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in publisher.books %}
+            <tr>
+                <td>{{ book.id | escape }}</td>
+                <td>
+                    {{ book.name | escape }} {% if book.disambiguation %}({{ book.disambiguation | escape }}){% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('book_show', {'id': book.id}) }}" class="btn btn-sm btn-primary">View</a>
+                    <a href="{{ path('book_edit', {'id': book.id}) }}" class="btn btn-sm btn-secondary">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">No books found for this publisher.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

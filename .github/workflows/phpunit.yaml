@@ -1,0 +1,36 @@
+name: Run tests
+
+on: [ push, pull_request ]
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+
+    runs-on: ubuntu-26.04 # ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: "ramsey/composer-install@v2"
+
+      - name: Install dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Run DB
+        run: |
+          sudo docker run --rm -d \
+            -e MYSQL_ROOT_PASSWORD=password \
+            -e MYSQL_DATABASE=bookshelf_test \
+            -e MYSQL_USER=app \
+            -e "MYSQL_PASSWORD=!ChangeMe!" \
+            -p 3306:3306 \
+            "ghcr.io/mariadb/mariadb:10.11"
+
+          sleep 60
+
+      - name: DB migration
+        run: php bin/console doctrine:migrations:migrate --env=test
+
+      - name: Run test suite
+        run: php bin/phpunit

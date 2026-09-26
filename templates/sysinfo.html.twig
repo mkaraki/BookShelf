@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}System Information{% endblock %}
+
+{% block body %}
+    <h1>System Information</h1>
+    <dl>
+        <dt>App Environment</dt>
+        <dd>{{ app.environment |e }}</dd>
+        <dt>App Version</dt>
+        <dd>{{ appVersion |e }}</dd>
+    </dl>
+{% endblock %}

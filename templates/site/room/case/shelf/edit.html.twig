@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Shelf #{{ shelf.id | escape }}{% endblock %}
+
+{% block body %}
+    <h1>Edit Shelf #{{ shelf.id | escape }}</h1>
+    {{ form(form) }}
+{% endblock %}
