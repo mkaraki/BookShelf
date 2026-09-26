@@ -31,8 +31,13 @@ class BookController extends AbstractController
             $books = $bookRepository->findByLikeNameField($value);
         } else if ($isGet && $request->query->has('isbn')) {
             $value = $request->query->get('isbn');
+            if (!is_string($value)) {
+                return $this->json([], status: 400);
+            }
+            // Accept hyphenated input, look up digits only.
+            $value = str_replace('-', '', $value);
             // Validate
-            if (!is_string($value) || !preg_match('/^[0-9]{13}$/', str_replace('-', '', $value))) {
+            if (!preg_match('/^[0-9]{13}$/', $value)) {
                 // Handle invalid ISBN
                 return $this->json([], status: 400);
             }

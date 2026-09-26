@@ -40,7 +40,7 @@ class Book
         type: Assert\Isbn::ISBN_13,
         message: 'This value is not valid ISBN-13 code.'
     )]
-    private ?string $isbn = null;
+    private ?int $isbn = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $disambiguation = null;
@@ -122,13 +122,22 @@ class Book
         return $this;
     }
 
-    public function getIsbn(): ?string
+    public function getIsbn(): ?int
     {
         return $this->isbn;
     }
 
-    public function setIsbn(?string $isbn): static
+    /**
+     * Accepts hyphenated input (e.g. "978-4-16-710586-0") and stores digits
+     * only, matching the BIGINT column. Empty input becomes null.
+     */
+    public function setIsbn(int|string|null $isbn): static
     {
+        if (is_string($isbn)) {
+            $isbn = str_replace('-', '', $isbn);
+            $isbn = $isbn === '' ? null : (int) $isbn;
+        }
+
         $this->isbn = $isbn;
 
         return $this;
