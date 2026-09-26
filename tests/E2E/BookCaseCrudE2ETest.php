@@ -19,6 +19,27 @@ final class BookCaseCrudE2ETest extends AbstractPantherTestCase
         $this->assertPageContains('2 case(s) found.');
     }
 
+    public function testCaseUnderMismatchedRoomYields404(): void
+    {
+        $this->loginAsAdmin();
+
+        $this->go('/site/2/room/new');
+        $this->client->submitForm('Save', ['room[name]' => 'Annex Room']);
+        $this->go('/site/2/room/2/case/new');
+        $this->client->submitForm('Save', ['book_case[name]' => 'Annex Case']);
+
+        // Case id 2 lives in room id 2.
+        $this->go('/site/2/room/2/case/2');
+        $this->assertStatusCode(200);
+        $this->assertPageContains('Annex Case');
+
+        // Mismatched case/room pair, and mismatched site/room pair, must both 404.
+        $this->go('/site/2/room/2/case/1');
+        $this->assertStatusCode(404);
+        $this->go('/site/2/room/1/case/1');
+        $this->assertStatusCode(404);
+    }
+
     public function testShowCaseDisplaysDetailsShelvesAndOwnedBooks(): void
     {
         $this->go('/site/1/room/1/case/1');

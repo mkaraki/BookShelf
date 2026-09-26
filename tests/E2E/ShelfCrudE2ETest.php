@@ -63,6 +63,27 @@ final class ShelfCrudE2ETest extends AbstractPantherTestCase
         $this->assertPageContains('No. 9');
     }
 
+    public function testShelfUnderMismatchedCaseYields404(): void
+    {
+        $this->loginAsAdmin();
+
+        $this->go('/site/1/room/1/case/new');
+        $this->client->submitForm('Save', ['book_case[name]' => 'Comics Case']);
+        $this->go('/site/1/room/1/case/2/shelf/new');
+        $this->client->submitForm('Save', ['shelf[shelfNumber]' => '4']);
+
+        // Shelf id 3 lives in case id 2.
+        $this->go('/site/1/room/1/case/2/shelf/3/');
+        $this->assertStatusCode(200);
+        $this->assertPageContains('Shelf: 4');
+
+        // Mismatched shelf/case pair, and mismatched case/room pair, must both 404.
+        $this->go('/site/1/room/1/case/1/shelf/3/');
+        $this->assertStatusCode(404);
+        $this->go('/site/1/room/1/case/2/shelf/1/');
+        $this->assertStatusCode(404);
+    }
+
     public function testDeleteEmptyShelf(): void
     {
         $this->loginAsAdmin();

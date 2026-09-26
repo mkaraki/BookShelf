@@ -70,7 +70,7 @@ class BookCaseController extends AbstractController
         BookCase $case,
     ): Response
     {
-        if ($case->isHidden($this->getUser())) {
+        if ($case->getParentRoom() !== $room || $room->getParentSite() !== $site || $case->isHidden($this->getUser())) {
             throw $this->createNotFoundException();
         }
 
