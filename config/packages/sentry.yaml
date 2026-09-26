@@ -44,4 +44,4 @@ services:
             $fillExtraContext: true # Enables sending monolog context to Sentry
     Sentry\SentryBundle\Monolog\LogsHandler:
         arguments:
-            - !php/const Monolog\Logger::WARN
+            - !php/const Monolog\Logger::WARNING
