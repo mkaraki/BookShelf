@@ -50,7 +50,7 @@ class ImportCommand extends Command
 
             return Command::FAILURE;
         }
-        $content = file_get_contents($file);
+        $content = is_file($file) ? file_get_contents($file) : false;
         if ($content === false) {
             $io->error('Cannot read file');
 
