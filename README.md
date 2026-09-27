@@ -67,7 +67,7 @@ Code types:
 
 ## Start server for development
 
-1. Run `.\db.debug.ps1` to start MariaDB server on Docker
+1. Run `.\db.debug.ps1` to start MariaDB server on Docker, or use devcontainer
 2. Run `symfony serve`
 
 ## Testing
