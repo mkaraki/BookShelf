@@ -1,0 +1,105 @@
+{
+    "sites": [
+        {
+            "siteId": "2",
+            "siteName": "Test Site"
+        }
+    ],
+    "rooms": [
+        {
+            "roomId": "2",
+            "roomName": "Test Room",
+            "parentSite": "2",
+            "roomFloor": null
+        }
+    ],
+    "cases": [
+        {
+            "caseId": "2",
+            "caseName": "R01-1",
+            "parentRoom": "2"
+        },
+        {
+            "caseId": "3",
+            "caseName": "R01-2",
+            "parentRoom": "2"
+        }
+    ],
+    "shelves": [
+        {
+            "shelfId": "2",
+            "shelfNumber": "4",
+            "parentCase": "2"
+        },
+        {
+            "shelfId": "3",
+            "shelfNumber": "4",
+            "parentCase": "3"
+        },
+        {
+            "shelfId": "10",
+            "shelfNumber": "5",
+            "parentCase": "3"
+        }
+    ],
+    "authors": [
+        {
+            "authorId": "1",
+            "authorName": "\u30a2\u30f3\u30bd\u30ed\u30b8\u30fc",
+            "authorRead": "\u3042\u3093\u305d\u308d\u3058\u30fc",
+            "authorDisambiguation": "\u6982\u5ff5"
+        }
+    ],
+    "publishers": [
+        {
+            "publisherId": "1",
+            "publisherName": "\u82b3\u6587\u793e",
+            "publisherRead": "\u307b\u3046\u3076\u3093\u3057\u3083",
+            "publisherDisambiguation": "\u300c\u307e\u3093\u304c\u30bf\u30a4\u30e0\u304d\u3089\u3089\u300d\u306a\u3069"
+        }
+    ],
+    "bookCollection": {
+        "0": {
+            "uniqueBookId": "1",
+            "belongShelf": "2",
+            "bookName": "\u307c\u3063\u3061\u30fb\u3056\u30fb\u308d\u3063\u304f!\u30a2\u30f3\u30bd\u30ed\u30b8\u30fc\u30b3\u30df\u30c3\u30af 1",
+            "bookRead": null,
+            "publisherId": "1",
+            "isbn": "9784832274143",
+            "bookDisambiguation": null,
+            "authorIds": [
+                "1"
+            ]
+        },
+        "1": {
+            "uniqueBookId": "40",
+            "belongShelf": "3",
+            "bookName": "\u306a\u308c\u308b!SE. 6 (\u697d\u3005\u5b9f\u8df5?\u30b5\u30a4\u30c9\u30d3\u30b8\u30cd\u30b9)",
+            "bookRead": "\u30ca\u30ec\u30eb SE 6 (\u30e9\u30af\u30e9\u30af \u30b8\u30c3\u30bb\u30f3 \u30b5\u30a4\u30c9 \u30d3\u30b8\u30cd\u30b9)",
+            "publisherId": null,
+            "isbn": "9784048863506",
+            "bookDisambiguation": null,
+            "authorIds": []
+        },
+        "2": {
+            "uniqueBookId": "53",
+            "belongShelf": "3",
+            "bookName": "\u30b9\u30ed\u30fc\u30eb\u30fc\u30d7. 1",
+            "bookRead": "\u30b9\u30ed\u30fc\u30eb\u30fc\u30d7 1",
+            "publisherId": "1",
+            "isbn": "9784832270763",
+            "bookDisambiguation": null,
+            "authorIds": []
+        },
+        "3": {
+            "uniqueBookId": "110",
+            "belongShelf": "10",
+            "bookName": "\u3053\u306e\u7d20\u6674\u3089\u3057\u3044\u4e16\u754c\u306b\u795d\u798f\u3092! 9",
+            "bookRead": "\u30b3\u30ce \u30b9\u30d0\u30e9\u30b7\u30a4 \u30bb\u30ab\u30a4 \u30cb \u30b7\u30e5\u30af\u30d5\u30af \u30aa 9",
+            "publisherId": null,
+            "isbn": "9784041039533",
+            "bookDisambiguation": "\u30aa\u30ea\u30b8\u30ca\u30eb\u30a2\u30cb\u30e1\u30d6\u30eb\u30fc\u30ec\u30a4\u540c\u68b1\u7248",
+            "authorIds": []
+        }
+    }
+}
