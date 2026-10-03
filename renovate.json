@@ -11,7 +11,9 @@
             "matchDatasources": [
                 "github-actions"
             ],
-            "groupName": "Actions/Docker/SigStore actions"
+            "groupName": "Actions/Docker/SigStore actions",
+            "automerge": true,
+            "automergeType": "pr"
         },
         {
             "matchPackageNames": [
@@ -20,7 +22,9 @@
             "matchDatasources": [
                 "github-actions"
             ],
-            "versioning": "semver"
+            "versioning": "semver",
+            "automerge": true,
+            "automergeType": "pr"
         },
         {
             "matchPackageNames": [
@@ -31,7 +35,9 @@
             "matchDatasources": [
                 "packagist"
             ],
-            "groupName": "Symfony Framework Related"
+            "groupName": "Symfony Framework Related",
+            "automerge": true,
+            "automergeType": "pr"
         }
     ],
     "bumpVersions": [
