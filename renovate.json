@@ -38,6 +38,28 @@
             "groupName": "Symfony Framework Related",
             "automerge": true,
             "automergeType": "pr"
+        },
+        {
+            "description": "Automerge dev tooling updates (by Muse)",
+            "matchManagers": [
+                "composer"
+            ],
+            "matchPackagePatterns": [
+                "^phpstan/",
+                "^sentry/"
+            ],
+            "matchPackageNames": [
+                "phpunit/phpunit"
+            ],
+            "groupName": "Dev tooling",
+            "matchUpdateTypes": [
+                "minor",
+                "patch"
+            ],
+            "automerge": true,
+            "automergeType": "pr",
+            "platformAutomerge": true,
+            "ignoreTests": false
         }
     ],
     "bumpVersions": [
