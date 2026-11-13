@@ -54,6 +54,32 @@ final class PrivateModeE2ETest extends AbstractPantherTestCase
         $this->assertStatusCode(404);
     }
 
+    public function testPrivateBooksHiddenOnAuthorAndPublisherPages(): void
+    {
+        $this->markPrivate('/book/1/edit', 'book');
+
+        $this->go('/author/1/');
+        $this->assertStatusCode(200);
+        $this->assertPageContains('Author: Jane Author');
+        $this->assertPageNotContains('Example Novel');
+        $this->assertPageNotContains('/book/1/');
+        $this->assertPageContains('1 private book(s) hidden.');
+
+        $this->go('/publisher/1/');
+        $this->assertStatusCode(200);
+        $this->assertPageContains('Publisher: Example Publishing');
+        $this->assertPageNotContains('Example Novel');
+        $this->assertPageNotContains('/book/1/');
+        $this->assertPageContains('1 private book(s) hidden.');
+
+        // Logged in users still see everything.
+        $this->loginAsAdmin();
+        $this->go('/author/1/');
+        $this->assertPageContains('Example Novel');
+        $this->go('/publisher/1/');
+        $this->assertPageContains('Example Novel');
+    }
+
     public function testPrivateBookHidesItsOwnedBooks(): void
     {
         $this->markPrivate('/book/1/edit', 'book');
