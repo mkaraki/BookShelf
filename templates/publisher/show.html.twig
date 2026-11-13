@@ -35,7 +35,9 @@
             </tr>
         </thead>
         <tbody>
-        {% for book in publisher.books %}
+        {% set visibleBooks = publisher.books|filter(b => not b.isHidden(app.user)) %}
+        {% set hiddenBooks = publisher.books|length - visibleBooks|length %}
+        {% for book in visibleBooks %}
             <tr>
                 <td>{{ book.id | escape }}</td>
                 <td>
@@ -51,6 +53,13 @@
                 <td colspan="3">No books found for this publisher.</td>
             </tr>
         {% endfor %}
+        {% if hiddenBooks > 0 %}
+            <tr class="private-hidden">
+                <td colspan="3">Some books are private and hidden from anonymous visitors.</td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
+    {{ visibleBooks | length }} book(s) found.
+    {% if hiddenBooks > 0 %}{{ hiddenBooks }} private book(s) hidden.{% endif %}
 {% endblock %}
