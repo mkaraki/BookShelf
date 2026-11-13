@@ -193,6 +193,24 @@ class Book
 
     public function isHidden(?UserInterface $user): bool
     {
-        return null === $user && $this->private;
+        if (null !== $user) {
+            return false;
+        }
+
+        if ($this->private) {
+            return true;
+        }
+
+        if ($this->publisher?->isHidden($user)) {
+            return true;
+        }
+
+        foreach ($this->authors as $author) {
+            if ($author->isHidden($user)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

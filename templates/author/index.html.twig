@@ -16,7 +16,9 @@
             </tr>
         </thead>
         <tbody>
-        {% for author in authors %}
+        {% set visibleAuthors = authors|filter(a => not a.isHidden(app.user)) %}
+        {% set hiddenAuthors = authors|length - visibleAuthors|length %}
+        {% for author in visibleAuthors %}
             <tr>
                 <th scope="row">{{ author.id | escape }}</th>
                 <td>
@@ -38,7 +40,13 @@
                 </td>
             </tr>
         {% endfor %}
+        {% if hiddenAuthors > 0 %}
+            <tr class="private-hidden">
+                <td colspan="3">Some authors are private and hidden from anonymous visitors.</td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
-    {{ authors | length }} author(s) found.
+    {{ visibleAuthors | length }} author(s) found.
+    {% if hiddenAuthors > 0 %}{{ hiddenAuthors }} private author(s) hidden.{% endif %}
 {% endblock %}
