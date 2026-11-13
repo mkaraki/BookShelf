@@ -56,6 +56,10 @@ class PublisherController extends AbstractController
     #[Route('/publisher/{id}/', name:'publisher_show')]
     public function show(EntityManagerInterface $entityManager, Request $request, Publisher $publisher): Response
     {
+        if ($publisher->isHidden($this->getUser())) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->render('publisher/show.html.twig', [
             'publisher' => $publisher,
         ]);

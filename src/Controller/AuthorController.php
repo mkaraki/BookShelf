@@ -54,6 +54,10 @@ class AuthorController extends AbstractController
     #[Route('/author/{id}/', name:'author_show')]
     public function show(EntityManagerInterface $entityManager, Request $request, Author $author): Response
     {
+        if ($author->isHidden($this->getUser())) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->render('author/show.html.twig', [
             'author' => $author,
         ]);

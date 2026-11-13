@@ -80,6 +80,74 @@ final class PrivateModeE2ETest extends AbstractPantherTestCase
         $this->assertPageContains('Example Novel');
     }
 
+    public function testPrivateAuthorIsHiddenFromAnonymous(): void
+    {
+        $this->markPrivate('/author/1/edit', 'author');
+
+        $this->go('/author/');
+        $this->assertStatusCode(200);
+        $this->assertPageNotContains('Jane Author');
+        $this->assertPageContains('0 author(s) found.');
+        $this->assertPageContains('Some authors are private and hidden from anonymous visitors.');
+        $this->assertPageContains('1 private author(s) hidden.');
+
+        $this->go('/author/1/');
+        $this->assertStatusCode(404);
+
+        // Books written by a private author are hidden too.
+        $this->go('/book/');
+        $this->assertStatusCode(200);
+        $this->assertPageNotContains('Example Novel');
+        $this->assertPageContains('Another Book');
+        $this->assertPageContains('1 book(s) found.');
+        $this->assertPageContains('1 private book(s) hidden.');
+        $this->go('/book/1/');
+        $this->assertStatusCode(404);
+
+        // Logged in users still see everything.
+        $this->loginAsAdmin();
+        $this->go('/author/1/');
+        $this->assertStatusCode(200);
+        $this->assertPageContains('Jane Author');
+        $this->go('/book/1/');
+        $this->assertStatusCode(200);
+        $this->assertPageContains('Example Novel');
+    }
+
+    public function testPrivatePublisherIsHiddenFromAnonymous(): void
+    {
+        $this->markPrivate('/publisher/1/edit', 'publisher');
+
+        $this->go('/publisher/');
+        $this->assertStatusCode(200);
+        $this->assertPageNotContains('Example Publishing');
+        $this->assertPageContains('0 publisher(s) found.');
+        $this->assertPageContains('Some publishers are private and hidden from anonymous visitors.');
+        $this->assertPageContains('1 private publisher(s) hidden.');
+
+        $this->go('/publisher/1/');
+        $this->assertStatusCode(404);
+
+        // Books of a private publisher are hidden too.
+        $this->go('/book/');
+        $this->assertStatusCode(200);
+        $this->assertPageNotContains('Example Novel');
+        $this->assertPageContains('Another Book');
+        $this->assertPageContains('1 book(s) found.');
+        $this->assertPageContains('1 private book(s) hidden.');
+        $this->go('/book/1/');
+        $this->assertStatusCode(404);
+
+        // Logged in users still see everything.
+        $this->loginAsAdmin();
+        $this->go('/publisher/1/');
+        $this->assertStatusCode(200);
+        $this->assertPageContains('Example Publishing');
+        $this->go('/book/1/');
+        $this->assertStatusCode(200);
+        $this->assertPageContains('Example Novel');
+    }
+
     public function testPrivateBookHidesItsOwnedBooks(): void
     {
         $this->markPrivate('/book/1/edit', 'book');

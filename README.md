@@ -27,11 +27,13 @@ graph LR
 
 ## Private mode
 
-`Site`, `Room`, `BookCase`, `Shelf`, `Book` and `OwnedBook` have a `private`
-flag, toggled on their edit form. When it is set, the object is hidden from
-anonymous visitors (404 on its page, filtered out of every list) and the whole
-location subtree below it is hidden too. `OwnedBook` is additionally hidden when
-its `Book` or its `Shelf` is private. Authenticated users always see everything.
+`Site`, `Room`, `BookCase`, `Shelf`, `Author`, `Publisher`, `Book` and
+`OwnedBook` have a `private` flag, toggled on their edit form. When it is set,
+the object is hidden from anonymous visitors (404 on its page, filtered out of
+every list) and the whole location subtree below it is hidden too. A `Book` is
+also hidden when its `Publisher` or any of its `Author`s are private.
+`OwnedBook` is additionally hidden when its `Book` or its `Shelf` is private.
+Authenticated users always see everything.
 
 Lists report both totals below the table (`N book(s) found.` plus
 `N private book(s) hidden.`) and end with a single placeholder row stating that
