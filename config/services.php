@@ -2,7 +2,7 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-const APP_VERSION = 'v2.2.0';
+const APP_VERSION = 'v2.2.1';
 
 return App::config([
     'parameters' => [
