@@ -4,7 +4,7 @@ on:
 
 jobs:
   validate:
-    uses: mkaraki/mkarakiapps-releasing-actions/.github/workflows/pr-version-validator.yaml@v0.2.10
+    uses: mkaraki/mkarakiapps-releasing-actions/.github/workflows/pr-version-validator.yaml@v0.2.11
     with:
       target-branch: ${{ github.base_ref }}
       version-file: config/services.php
